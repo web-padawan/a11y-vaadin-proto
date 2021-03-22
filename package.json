@@ -1,0 +1,22 @@
+{
+  "name": "a11y-proto",
+  "private": true,
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "eslint src",
+    "start": "web-dev-server --node-resolve --open"
+  },
+  "dependencies": {
+    "@polymer/polymer": "^3.4.1",
+    "@vaadin/vaadin-lumo-styles": "^1.6.1",
+    "@vaadin/vaadin-themable-mixin": "^1.6.2"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.10",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1"
+  }
+}

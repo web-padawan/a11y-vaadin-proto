@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>a11y proto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+
+    <!-- Checkbox -->
+    <v-checkbox>I accept <a href="#">Terms and conditions</a></v-checkbox>
+    <v-checkbox checked indeterminate label="Check me"></v-checkbox>
+
+    <br>
+    <br>
+
+    <!-- Radio button -->
+    <v-radio-button name="account" value="existing">Use <a href="#">existing account</a></v-radio-button>
+    <v-radio-button name="account" value="new" checked label="Create new account"></v-radio-button>
+
+    <script type="module">
+      import './src/styles/checkbox.js';
+      import './src/styles/radio-button.js';
+      import './src/v-checkbox.js';
+      import './src/v-radio-button.js';
+    </script>
+  </body>
+</html>
