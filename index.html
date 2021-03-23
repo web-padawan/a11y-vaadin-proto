@@ -25,21 +25,38 @@
     <v-checkbox-group
       required
       label="Choose your meal"
-      helper-text="One or many dishes"
-      error-message="Select at least one"
+      helper-text="Select at least one"
+      error-message="This field is required"
     >
       <v-checkbox value="pizza">Pizza</v-checkbox>
       <v-checkbox value="fish">Fish</v-checkbox>
       <v-checkbox value="veggies">Veggies</v-checkbox>
     </v-checkbox-group>
 
+    <br />
+    <br />
+
+    <!-- Radio group -->
+    <v-radio-group
+      required
+      label="Delivery time"
+      helper-text="We will call to confirm"
+      error-message="This field is required"
+    >
+      <v-radio-button name="time" value="morning">08:00 - 12:00</v-radio-button>
+      <v-radio-button name="time" value="afternoon">12:00 - 16:00</v-radio-button>
+      <v-radio-button name="time" value="evening">16:00 - 20:00</v-radio-button>
+    </v-radio-group>
+
     <script type="module">
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
+      import './src/styles/radio-group.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';
+      import './src/v-radio-group.js';
     </script>
   </body>
 </html>

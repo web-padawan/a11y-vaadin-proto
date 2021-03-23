@@ -3,7 +3,7 @@ import '@vaadin/vaadin-lumo-styles/color.js';
 import '@vaadin/vaadin-lumo-styles/mixins/required-field.js';
 
 registerStyles(
-  'v-checkbox-group',
+  'v-radio-group',
   css`
     :host {
       color: var(--lumo-body-text-color);
@@ -21,7 +21,6 @@ registerStyles(
       display: inline-flex;
       align-items: center;
     }
-
     :host([theme~='vertical']) [part='group-field'] {
       display: flex;
       flex-direction: column;
@@ -32,17 +31,12 @@ registerStyles(
       padding-bottom: 0.7em;
     }
 
-    :host([disabled]) [part='label'] {
-      color: var(--lumo-disabled-text-color);
-      -webkit-text-fill-color: var(--lumo-disabled-text-color);
-    }
-
-    :host([focused]:not([disabled])) [part='label'] {
+    :host([focused]:not([readonly])) [part='label'] {
       color: var(--lumo-primary-text-color);
     }
 
-    :host(:hover:not([disabled]):not([focused])) [part='label'],
-    :host(:hover:not([disabled]):not([focused])) [part='helper-text'] {
+    :host(:hover:not([readonly]):not([focused])) [part='label'],
+    :host(:hover:not([readonly])) [part='helper-text'] {
       color: var(--lumo-body-text-color);
     }
 
@@ -91,10 +85,10 @@ registerStyles(
 
     /* Touch device adjustment */
     @media (pointer: coarse) {
-      :host(:hover:not([disabled]):not([focused])) [part='label'] {
+      :host(:hover:not([readonly]):not([focused])) [part='label'] {
         color: var(--lumo-secondary-text-color);
       }
     }
   `,
-  { moduleId: 'lumo-checkbox-group', include: ['lumo-required-field'] }
+  { include: ['lumo-required-field'], moduleId: 'lumo-radio-group' }
 );
