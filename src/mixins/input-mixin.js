@@ -27,10 +27,27 @@ const InputMixinImplementation = (superclass) =>
           if (value) {
             native.setAttribute('value', value);
           }
+          const name = this.getAttribute('name');
+          if (name) {
+            native.setAttribute('name', name);
+          }
           native.setAttribute('type', this.type);
           return native;
         }
       };
+    }
+
+    get name() {
+      return (this._inputNode && this._inputNode.name) || this.__name || '';
+    }
+
+    set name(value) {
+      if (this._inputNode) {
+        this._inputNode.name = value;
+        this.__name = undefined;
+      } else {
+        this.__name = value;
+      }
     }
 
     get value() {
