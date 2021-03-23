@@ -21,7 +21,10 @@ const SlotMixinImplementation = (superclass) =>
     _connectSlotMixin() {
       if (!this.__isConnectedSlotMixin) {
         Object.keys(this.slots).forEach((slotName) => {
-          if (!this.querySelector(`[slot=${slotName}]`)) {
+          // Ignore labels of nested components, if any
+          const hasContent = Array.from(this.children).some((child) => child.matches(`[slot=${slotName}]`));
+
+          if (!hasContent) {
             const slotFactory = this.slots[slotName];
             const slotContent = slotFactory();
             if (slotContent instanceof Element) {

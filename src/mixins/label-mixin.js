@@ -36,12 +36,30 @@ const LabelMixinImplementation = (superclass) =>
       if (this._labelNode) {
         this._labelNode.textContent = label;
       }
-      this._toggleHasLabel(label);
+      // TODO: also handle DOM changes
+      this._labelChanged(label);
+    }
+
+    constructor() {
+      super();
+
+      // Ensure every instance has unique ID
+      const uniqueId = (LabelMixinClass._uniqueId = 1 + LabelMixinClass._uniqueId || 0);
+      this._labelId = `label-${this.localName}-${uniqueId}`;
     }
 
     /** @protected */
-    _toggleHasLabel() {
-      this.toggleAttribute('has-label', Boolean(this.label));
+    connectedCallback() {
+      super.connectedCallback();
+
+      if (this._labelNode) {
+        this._labelNode.id = this._labelId;
+      }
+    }
+
+    /** @protected */
+    _labelChanged(label) {
+      this.toggleAttribute('has-label', Boolean(label));
     }
   };
 

@@ -1,5 +1,4 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { DisabledMixin } from './disabled-mixin.js';
 
 // We consider the keyboard to be active if the window has received a keydown
 // event since the last mousedown event.
@@ -24,17 +23,19 @@ window.addEventListener(
 );
 
 export const FocusMixinImplementation = (superclass) =>
-  class FocusMixinClass extends DisabledMixin(superclass) {
+  class FocusMixinClass extends superclass {
     /** @protected */
     ready() {
       this.addEventListener('focusin', (e) => {
-        if (e.composedPath()[0] === this.focusElement) {
+        if (this._shouldSetFocus(e)) {
           this._setFocused(true);
         }
       });
 
-      this.addEventListener('focusout', () => {
-        this._setFocused(false);
+      this.addEventListener('focusout', (e) => {
+        if (this._shouldRemoveFocus(e)) {
+          this._setFocused(false);
+        }
       });
 
       // In super.ready() other 'focusin' and 'focusout' listeners might be
@@ -76,59 +77,23 @@ export const FocusMixinImplementation = (superclass) =>
     }
 
     /**
-     * Any element extending this mixin is required to implement this getter.
-     * It returns the actual focusable element in the component.
-     * @return {Element | null | undefined}
+     * @param {Event} e
+     * @return {boolean}
+     * @protected
      */
-    get focusElement() {
-      console.warn(`Please implement the 'focusElement' property in <${this.localName}>`);
-      return this;
-    }
-
-    /** @protected */
-    _focus() {
-      if (!this.focusElement || this._isShiftTabbing) {
-        return;
-      }
-
-      this.focusElement.focus();
-      this._setFocused(true);
-    }
-
-    focus() {
-      if (!this.focusElement || this.disabled) {
-        return;
-      }
-
-      this.focusElement.focus();
-      this._setFocused(true);
-    }
-
-    blur() {
-      if (!this.focusElement) {
-        return;
-      }
-      this.focusElement.blur();
-      this._setFocused(false);
+    // eslint-disable-next-line no-unused-vars
+    _shouldSetFocus(e) {
+      return true;
     }
 
     /**
-     * @param {boolean} disabled
+     * @param {Event} e
+     * @return {boolean}
      * @protected
      */
-    _disabledChanged(disabled) {
-      super._disabledChanged(disabled);
-
-      this.focusElement.disabled = disabled;
-      if (disabled) {
-        this.blur();
-      }
-    }
-
-    click() {
-      if (!this.disabled) {
-        this.focusElement.click();
-      }
+    // eslint-disable-next-line no-unused-vars
+    _shouldRemoveFocus(e) {
+      return true;
     }
   };
 

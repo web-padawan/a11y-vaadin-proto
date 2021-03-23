@@ -1,9 +1,9 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { FocusMixin } from './focus-mixin.js';
+import { DelegateFocusMixin } from './delegate-focus-mixin.js';
 import { LabelMixin } from './label-mixin.js';
 
 const InputMixinImplementation = (superclass) =>
-  class InputMixinClass extends FocusMixin(LabelMixin(superclass)) {
+  class InputMixinClass extends DelegateFocusMixin(LabelMixin(superclass)) {
     static get properties() {
       return {
         value: {
@@ -87,17 +87,13 @@ const InputMixinImplementation = (superclass) =>
 
     /** @protected */
     _enhanceLightDomA11y() {
-      const id = this._inputId;
-      const labelId = `label-${id}`;
-
       if (this._inputNode) {
-        this._inputNode.id = id;
-        this._inputNode.setAttribute('aria-labelledby', labelId);
+        this._inputNode.id = this._inputId;
+        this._inputNode.setAttribute('aria-labelledby', this._labelId);
       }
 
       if (this._labelNode) {
-        this._labelNode.setAttribute('for', id);
-        this._labelNode.id = labelId;
+        this._labelNode.setAttribute('for', this._inputId);
       }
     }
 

@@ -27,7 +27,7 @@ const SlotLabelMixinImplementation = (superclass) =>
         labelPart.removeAttribute('empty');
       }
 
-      this._toggleHasLabel();
+      this._labelChanged(this.label);
     }
   };
 

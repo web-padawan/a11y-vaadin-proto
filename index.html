@@ -18,10 +18,27 @@
     <v-radio-button name="account" value="existing">Use <a href="#">existing account</a></v-radio-button>
     <v-radio-button name="account" value="new" checked label="Create new account"></v-radio-button>
 
+    <br />
+    <br />
+
+    <!-- Checkbox group -->
+    <v-checkbox-group
+      required
+      label="Choose your meal"
+      helper-text="One or many dishes"
+      error-message="Select at least one"
+    >
+      <v-checkbox value="pizza">Pizza</v-checkbox>
+      <v-checkbox value="fish">Fish</v-checkbox>
+      <v-checkbox value="veggies">Veggies</v-checkbox>
+    </v-checkbox-group>
+
     <script type="module">
       import './src/styles/checkbox.js';
+      import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
       import './src/v-checkbox.js';
+      import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';
     </script>
   </body>
