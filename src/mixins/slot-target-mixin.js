@@ -5,6 +5,10 @@ const SlotTargetMixinImplementation = (superclass) =>
     constructor() {
       super();
       this._handleNoopSlotChange = this._handleNoopSlotChange.bind(this);
+
+      this.__targetChildObserver = new MutationObserver(() => {
+        this._slotTargetChanged();
+      });
     }
 
     /** @protected */
@@ -15,14 +19,18 @@ const SlotTargetMixinImplementation = (superclass) =>
         this._noopSlot.addEventListener('slotchange', this._handleNoopSlotChange);
       }
 
-      if (this._slotTarget && this.__textContent) {
-        this._slotTarget.textContent = this.__textContent;
-        this.__textContent = undefined;
-      }
+      if (this._slotTarget) {
+        this.__targetChildObserver.observe(this._slotTarget, { childList: true, characterData: true });
 
-      if (this._slotTarget && this.__innerHTML) {
-        this._slotTarget.innerHTML = this.__innerHTML;
-        this.__innerHTML = undefined;
+        if (this.__textContent) {
+          this._slotTarget.textContent = this.__textContent;
+          this.__textContent = undefined;
+        }
+
+        if (this.__innerHTML) {
+          this._slotTarget.innerHTML = this.__innerHTML;
+          this.__innerHTML = undefined;
+        }
       }
     }
 
@@ -32,6 +40,9 @@ const SlotTargetMixinImplementation = (superclass) =>
 
       if (this._noopSlot) {
         this._noopSlot.removeEventListener('slotchange', this._handleNoopSlotChange);
+      }
+      if (this._slotTarget) {
+        this.__targetChildObserver.disconnect();
       }
     }
 
@@ -79,6 +90,9 @@ const SlotTargetMixinImplementation = (superclass) =>
     get innerHTML() {
       return this._slotTarget ? this._slotTarget.__innerHTML : this.__innerHTML || '';
     }
+
+    /** @protected */
+    _slotTargetChanged() {}
   };
 
 /**

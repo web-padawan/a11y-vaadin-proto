@@ -1,4 +1,5 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
+import { DisabledMixin } from './disabled-mixin.js';
 
 // We consider the keyboard to be active if the window has received a keydown
 // event since the last mousedown event.
@@ -23,31 +24,16 @@ window.addEventListener(
 );
 
 export const FocusMixinImplementation = (superclass) =>
-  class FocusMixinClass extends superclass {
-    static get properties() {
-      return {
-        /**
-         * If true, the user cannot interact with this element.
-         */
-        disabled: {
-          type: Boolean,
-          observer: '_disabledChanged',
-          reflectToAttribute: true
-        }
-      };
-    }
-
+  class FocusMixinClass extends DisabledMixin(superclass) {
     /** @protected */
     ready() {
       this.addEventListener('focusin', (e) => {
-        console.log('focusin', e.composedPath()[0]);
         if (e.composedPath()[0] === this.focusElement) {
           this._setFocused(true);
         }
       });
 
-      this.addEventListener('focusout', (e) => {
-        console.log('focusout', e.composedPath()[0]);
+      this.addEventListener('focusout', () => {
         this._setFocused(false);
       });
 
@@ -128,15 +114,14 @@ export const FocusMixinImplementation = (superclass) =>
 
     /**
      * @param {boolean} disabled
-     * @private
+     * @protected
      */
     _disabledChanged(disabled) {
+      super._disabledChanged(disabled);
+
       this.focusElement.disabled = disabled;
       if (disabled) {
         this.blur();
-        this.setAttribute('aria-disabled', 'true');
-      } else {
-        this.removeAttribute('aria-disabled');
       }
     }
 

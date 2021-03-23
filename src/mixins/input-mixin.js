@@ -1,15 +1,11 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { SlotTargetMixin } from './slot-target-mixin.js';
-import { SlotMixin } from './slot-mixin.js';
+import { FocusMixin } from './focus-mixin.js';
+import { LabelMixin } from './label-mixin.js';
 
-const InputFieldMixinImplementation = (superclass) =>
-  class InputFieldMixinClass extends SlotTargetMixin(SlotMixin(superclass)) {
+const InputMixinImplementation = (superclass) =>
+  class InputMixinClass extends FocusMixin(LabelMixin(superclass)) {
     static get properties() {
       return {
-        label: {
-          type: String
-        },
-
         value: {
           type: String
         },
@@ -33,24 +29,8 @@ const InputFieldMixinImplementation = (superclass) =>
           }
           native.setAttribute('type', this.type);
           return native;
-        },
-        label: () => {
-          const label = document.createElement('label');
-          label.textContent = this.label;
-          return label;
         }
       };
-    }
-
-    get label() {
-      return this.__label !== undefined ? this.__label : (this._labelNode && this._labelNode.textContent) || '';
-    }
-
-    set label(label) {
-      this.__label = label;
-      if (this._labelNode) {
-        this._labelNode.textContent = label;
-      }
     }
 
     get value() {
@@ -67,11 +47,6 @@ const InputFieldMixinImplementation = (superclass) =>
     }
 
     /** @protected */
-    get _labelNode() {
-      return this._getDirectSlotChild('label');
-    }
-
-    /** @protected */
     get _inputNode() {
       return this._getDirectSlotChild('input');
     }
@@ -81,27 +56,14 @@ const InputFieldMixinImplementation = (superclass) =>
       return this._inputNode;
     }
 
-    /** @protected */
-    get _slotTarget() {
-      return this._labelNode;
-    }
-
     constructor() {
       super();
 
       // Ensure every instance has unique ID
-      const uniqueId = (InputFieldMixinClass._uniqueId = 1 + InputFieldMixinClass._uniqueId || 0);
+      const uniqueId = (InputMixinClass._uniqueId = 1 + InputMixinClass._uniqueId || 0);
       this._inputId = `${this.localName}-${uniqueId}`;
 
       this.__preventDuplicateLabelClick = this.__preventDuplicateLabelClick.bind(this);
-
-      this.__labelChildObserver = new MutationObserver((record) => {
-        record.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            this.__updateLabelAttribute();
-          }
-        });
-      });
     }
 
     /** @protected */
@@ -111,10 +73,6 @@ const InputFieldMixinImplementation = (superclass) =>
       this._enhanceLightDomA11y();
       if (this._labelNode) {
         this._labelNode.addEventListener('click', this.__preventDuplicateLabelClick);
-
-        this.__labelChildObserver.observe(this._labelNode, { childList: true });
-
-        this.__updateLabelAttribute();
       }
     }
 
@@ -124,14 +82,7 @@ const InputFieldMixinImplementation = (superclass) =>
 
       if (this._labelNode) {
         this._labelNode.removeEventListener('click', this.__preventDuplicateLabelClick);
-
-        this.__labelChildObserver.disconnect();
       }
-    }
-
-    /** @protected */
-    _getDirectSlotChild(slotName) {
-      return Array.from(this.children).find((el) => el.slot === slotName);
     }
 
     /** @protected */
@@ -172,25 +123,6 @@ const InputFieldMixinImplementation = (superclass) =>
         this._inputNode.setAttribute('type', type);
       }
     }
-
-    /** @private */
-    __updateLabelAttribute() {
-      const labelPart = this._labelNode.assignedSlot.parentElement;
-      if (this.__isChildNodesEmpty(this._labelNode.childNodes)) {
-        labelPart.setAttribute('empty', '');
-      } else {
-        labelPart.removeAttribute('empty');
-      }
-    }
-
-    /** @private */
-    __isChildNodesEmpty(nodes) {
-      // The assigned nodes considered to be empty if there is no slotted content or only one empty text node
-      return (
-        nodes.length === 0 ||
-        (nodes.length == 1 && nodes[0].nodeType == Node.TEXT_NODE && nodes[0].textContent.trim() === '')
-      );
-    }
   };
 
-export const InputFieldMixin = dedupingMixin(InputFieldMixinImplementation);
+export const InputMixin = dedupingMixin(InputMixinImplementation);

@@ -1,8 +1,8 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { SlotMixin } from './slot-mixin.js';
+import { InputMixin } from './input-mixin.js';
 
 const CheckedMixinImplementation = (superclass) =>
-  class CheckedMixinClass extends SlotMixin(superclass) {
+  class CheckedMixinClass extends InputMixin(superclass) {
     static get properties() {
       return {
         /**

@@ -35,6 +35,11 @@ const SlotMixinImplementation = (superclass) =>
       }
     }
 
+    /** @protected */
+    _getDirectSlotChild(slotName) {
+      return Array.from(this.children).find((el) => el.slot === slotName);
+    }
+
     /**
      * @param {string} slotName Name of the slot
      * @return {boolean} true if given slot name was created by SlotMixin

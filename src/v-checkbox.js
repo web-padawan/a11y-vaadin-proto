@@ -1,11 +1,10 @@
 import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
-import { InputFieldMixin } from './mixins/input-field-mixin.js';
-import { FocusMixin } from './mixins/focus-mixin.js';
 import { ActiveMixin } from './mixins/active-mixin.js';
 import { CheckedMixin } from './mixins/checked-mixin.js';
+import { SlotLabelMixin } from './mixins/slot-label-mixin.js';
 
-export class VCheckbox extends CheckedMixin(InputFieldMixin(ActiveMixin(FocusMixin(ThemableMixin(PolymerElement))))) {
+export class VCheckbox extends SlotLabelMixin(CheckedMixin(ActiveMixin(ThemableMixin(PolymerElement)))) {
   static get is() {
     return 'v-checkbox';
   }
