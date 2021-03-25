@@ -169,7 +169,7 @@ export class VRadioGroup extends ValidateMixin(
    * @param {boolean} focused
    * @protected
    */
-   _setFocused(focused) {
+  _setFocused(focused) {
     if (!focused) {
       this.validate();
     }

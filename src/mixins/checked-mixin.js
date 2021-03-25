@@ -20,16 +20,39 @@ const CheckedMixinImplementation = (superclass) =>
         /**
          * Name of the element.
          */
-        name: String
+        name: String,
+
+        /**
+         * Value of the element.
+         */
+        value: String
       };
     }
 
     get name() {
-      return this.checked ? this.__storedName : '';
+      return this.checked ? (this._inputNode && this._inputNode.name) || this.__name || '' : '';
     }
 
-    set name(name) {
-      this.__storedName = name;
+    set name(value) {
+      if (this._inputNode) {
+        this._inputNode.name = value;
+        this.__name = undefined;
+      } else {
+        this.__name = value;
+      }
+    }
+
+    get value() {
+      return (this._inputNode && this._inputNode.value) || this.__value || '';
+    }
+
+    set value(value) {
+      if (this._inputNode) {
+        this._inputNode.value = value;
+        this.__value = undefined;
+      } else {
+        this.__value = value;
+      }
     }
 
     constructor() {

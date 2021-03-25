@@ -48,15 +48,43 @@
       <v-radio-button name="time" value="evening">16:00 - 20:00</v-radio-button>
     </v-radio-group>
 
+    <br />
+    <br />
+
+    <!-- Text field -->
+    <v-text-field
+      label="Name"
+      placeholder="Your first name"
+      error-message="This field is required"
+      required
+    ></v-text-field>
+
+    <br />
+    <br />
+
+    <!-- Number field -->
+    <v-number-field
+      label="Price"
+      value="0"
+      step="2"
+      error-message="This field is required"
+      required
+      has-controls
+    ></v-number-field>
+
     <script type="module">
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
       import './src/styles/radio-group.js';
+      import './src/styles/text-field.js';
+      import './src/styles/number-field.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';
       import './src/v-radio-group.js';
+      import './src/v-text-field.js';
+      import './src/v-number-field.js';
     </script>
   </body>
 </html>

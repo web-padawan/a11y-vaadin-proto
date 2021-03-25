@@ -107,7 +107,10 @@ const ValidateMixinImplementation = (superclass) =>
       this.toggleAttribute('has-error-message', Boolean(this.errorMessage));
     }
 
-    /** @private */
+    /**
+     * @param {boolean} invalid
+     * @protected
+     */
     _invalidChanged(invalid) {
       if (this._errorNode) {
         const hidden = Boolean(!invalid).toString();

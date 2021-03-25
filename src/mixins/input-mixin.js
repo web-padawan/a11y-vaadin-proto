@@ -6,10 +6,6 @@ const InputMixinImplementation = (superclass) =>
   class InputMixinClass extends DelegateFocusMixin(LabelMixin(superclass)) {
     static get properties() {
       return {
-        value: {
-          type: String
-        },
-
         type: {
           type: String,
           readOnly: true,
@@ -35,32 +31,6 @@ const InputMixinImplementation = (superclass) =>
           return native;
         }
       };
-    }
-
-    get name() {
-      return (this._inputNode && this._inputNode.name) || this.__name || '';
-    }
-
-    set name(value) {
-      if (this._inputNode) {
-        this._inputNode.name = value;
-        this.__name = undefined;
-      } else {
-        this.__name = value;
-      }
-    }
-
-    get value() {
-      return (this._inputNode && this._inputNode.value) || this.__value || '';
-    }
-
-    set value(value) {
-      if (this._inputNode) {
-        this._inputNode.value = value;
-        this.__value = undefined;
-      } else {
-        this.__value = value;
-      }
     }
 
     /** @protected */
