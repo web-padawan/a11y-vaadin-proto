@@ -39,5 +39,5 @@ registerStyles(
       --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 1.25em);
     }
   `,
-  { moduleId: 'lumo-number-field', include: ['lumo-field-button', 'lumo-text-field'] }
+  { moduleId: 'lumo-number-field', include: ['lumo-text-field'] }
 );

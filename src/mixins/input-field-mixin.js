@@ -1,10 +1,10 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { InputMixin } from './input-mixin.js';
+import { InputAriaMixin } from './input-aria-mixin.js';
 import { ValidateMixin } from './validate-mixin.js';
 import { SlotStylesMixin } from './slot-styles-mixin.js';
 
 const InputFieldMixinImplementation = (superclass) =>
-  class InputFieldMixinClass extends SlotStylesMixin(ValidateMixin(InputMixin(superclass))) {
+  class InputFieldMixinClass extends SlotStylesMixin(ValidateMixin(InputAriaMixin(superclass))) {
     static get properties() {
       return {
         /**
@@ -275,7 +275,7 @@ const InputFieldMixinImplementation = (superclass) =>
       if (e.key === 'Escape' && this.clearButtonVisible) {
         const dispatchChange = !!this.value;
         this.clear();
-        dispatchChange && this.inputElement.dispatchEvent(new Event('change', { bubbles: !this._slottedInput }));
+        dispatchChange && this.inputElement.dispatchEvent(new Event('change'));
       }
 
       if (this._enabledCharPattern && !this.__shouldAcceptKey(e)) {

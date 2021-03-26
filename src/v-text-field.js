@@ -2,6 +2,7 @@ import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { TextFieldMixin } from './mixins/text-field-mixin.js';
 import './styles/text-field-shared.js';
+import './v-input-container.js';
 
 export class VTextField extends TextFieldMixin(ThemableMixin(PolymerElement)) {
   static get is() {
@@ -17,11 +18,11 @@ export class VTextField extends TextFieldMixin(ThemableMixin(PolymerElement)) {
           <slot name="label"></slot>
         </div>
 
-        <div part="input-field">
-          <slot name="prefix"></slot>
-          <slot name="input"></slot>
-          <slot name="suffix"></slot>
-        </div>
+        <v-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]">
+          <slot name="prefix" slot="prefix"></slot>
+          <slot name="input" slot="input"></slot>
+          <slot name="suffix" slot="suffix"></slot>
+        </v-input-container>
 
         <div part="helper-text" on-click="focus">
           <slot name="helper"></slot>

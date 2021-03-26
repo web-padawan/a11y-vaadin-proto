@@ -2,6 +2,7 @@ import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { InputFieldMixin } from './mixins/input-field-mixin.js';
 import './styles/text-field-shared.js';
+import './v-input-container.js';
 
 export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement)) {
   static get is() {
@@ -38,16 +39,18 @@ export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement))
           <slot name="label"></slot>
         </div>
 
-        <div part="input-field">
+        <v-input-container part="input-field">
           <div
             disabled$="[[!_allowed(-1, value, min, max, step)]]"
             part="decrease-button"
             on-click="_decreaseValue"
             on-touchend="_decreaseButtonTouchend"
             hidden$="[[!hasControls]]"
+            slot="prefix"
           ></div>
-          <slot name="prefix"></slot>
-          <slot name="input"></slot>
+          <slot name="prefix" slot="prefix"></slot>
+          <slot name="input" slot="input"></slot>
+          <slot name="suffix" slot="suffix"></slot>
           <slot name="suffix"></slot>
           <div
             disabled$="[[!_allowed(1, value, min, max, step)]]"
@@ -55,8 +58,9 @@ export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement))
             on-click="_increaseValue"
             on-touchend="_increaseButtonTouchend"
             hidden$="[[!hasControls]]"
+            slot="suffix"
           ></div>
-        </div>
+        </v-input-container>
 
         <div part="helper-text" on-click="focus">
           <slot name="helper"></slot>
