@@ -1,10 +1,11 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
+import { HelperTextMixin } from './helper-text-mixin.js';
 import { InputAriaMixin } from './input-aria-mixin.js';
 import { ValidateMixin } from './validate-mixin.js';
 import { SlotStylesMixin } from './slot-styles-mixin.js';
 
 const InputFieldMixinImplementation = (superclass) =>
-  class InputFieldMixinClass extends SlotStylesMixin(ValidateMixin(InputAriaMixin(superclass))) {
+  class InputFieldMixinClass extends SlotStylesMixin(HelperTextMixin(ValidateMixin(InputAriaMixin(superclass)))) {
     static get properties() {
       return {
         /**
@@ -135,6 +136,8 @@ const InputFieldMixinImplementation = (superclass) =>
       super.connectedCallback();
 
       if (this._inputNode) {
+        this._inputNode.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
+
         this._addInputListeners(this._inputNode);
 
         this._validateSlottedValue(this._inputNode);

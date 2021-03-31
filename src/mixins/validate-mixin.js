@@ -41,7 +41,6 @@ const ValidateMixinImplementation = (superclass) =>
         ...super.slots,
         'error-message': () => {
           const error = document.createElement('div');
-          // TODO: consider using aria-a11y-announcer instead
           error.setAttribute('aria-live', 'assertive');
           error.textContent = this.errorMessage;
           return error;
@@ -73,7 +72,7 @@ const ValidateMixinImplementation = (superclass) =>
 
       // Ensure every instance has unique ID
       const uniqueId = (ValidateMixinClass._uniqueId = 1 + ValidateMixinClass._uniqueId || 0);
-      this._errorId = `${this.localName}-${uniqueId}`;
+      this._errorId = `error-${this.localName}-${uniqueId}`;
     }
 
     /** @protected */
@@ -81,7 +80,7 @@ const ValidateMixinImplementation = (superclass) =>
       super.connectedCallback();
 
       if (this._errorNode) {
-        this._errorNode.id = `error-${this._errorId}`;
+        this._errorNode.id = this._errorId;
       }
     }
 

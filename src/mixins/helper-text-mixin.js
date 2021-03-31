@@ -54,8 +54,8 @@ const HelperTextMixinImplementation = (superclass) =>
     connectedCallback() {
       super.connectedCallback();
 
-      if (this._labelNode) {
-        this._labelNode.id = this._labelId;
+      if (this._helperNode) {
+        this._helperNode.id = this._helperId;
       }
     }
 
