@@ -2,7 +2,7 @@ import { OverlayElement } from '@vaadin/vaadin-overlay/src/vaadin-overlay.js';
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
 
 registerStyles(
-  'v-select-overlay',
+  'vaadin-select-overlay',
   css`
     :host {
       align-items: flex-start;
@@ -14,7 +14,7 @@ registerStyles(
 
 class SelectOverlayElement extends OverlayElement {
   static get is() {
-    return 'v-select-overlay';
+    return 'vaadin-select-overlay';
   }
 }
 

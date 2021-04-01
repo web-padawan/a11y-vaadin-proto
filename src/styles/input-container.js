@@ -8,7 +8,7 @@ import '@vaadin/vaadin-lumo-styles/font-icons.js';
 import '@vaadin/vaadin-lumo-styles/mixins/field-button.js';
 
 registerStyles(
-  'v-input-container',
+  'vaadin-input-container',
   css`
     :host {
       border-radius: var(--lumo-border-radius);

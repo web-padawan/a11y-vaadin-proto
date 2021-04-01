@@ -8,75 +8,75 @@
   </head>
   <body>
     <!-- Checkbox -->
-    <v-checkbox>I accept <a href="#">Terms and conditions</a></v-checkbox>
-    <v-checkbox checked indeterminate label="Check me"></v-checkbox>
+    <vaadin-checkbox>I accept <a href="#">Terms and conditions</a></vaadin-checkbox>
+    <vaadin-checkbox checked indeterminate label="Check me"></vaadin-checkbox>
 
     <br />
     <br />
 
     <!-- Radio button -->
-    <v-radio-button name="account" value="existing">Use <a href="#">existing account</a></v-radio-button>
-    <v-radio-button name="account" value="new" checked label="Create new account"></v-radio-button>
+    <vaadin-radio-button name="account" value="existing">Use <a href="#">existing account</a></vaadin-radio-button>
+    <vaadin-radio-button name="account" value="new" checked label="Create new account"></vaadin-radio-button>
 
     <br />
     <br />
 
     <!-- Checkbox group -->
-    <v-checkbox-group
+    <vaadin-checkbox-group
       required
       label="Choose your meal"
       helper-text="Select at least one"
       error-message="This field is required"
     >
-      <v-checkbox value="pizza">Pizza</v-checkbox>
-      <v-checkbox value="fish">Fish</v-checkbox>
-      <v-checkbox value="veggies">Veggies</v-checkbox>
-    </v-checkbox-group>
+      <vaadin-checkbox value="pizza">Pizza</vaadin-checkbox>
+      <vaadin-checkbox value="fish">Fish</vaadin-checkbox>
+      <vaadin-checkbox value="veggies">Veggies</vaadin-checkbox>
+    </vaadin-checkbox-group>
 
     <br />
     <br />
 
     <!-- Radio group -->
-    <v-radio-group
+    <vaadin-radio-group
       required
       label="Delivery time"
       helper-text="We will call to confirm"
       error-message="This field is required"
     >
-      <v-radio-button name="time" value="morning">08:00 - 12:00</v-radio-button>
-      <v-radio-button name="time" value="afternoon">12:00 - 16:00</v-radio-button>
-      <v-radio-button name="time" value="evening">16:00 - 20:00</v-radio-button>
-    </v-radio-group>
+      <vaadin-radio-button name="time" value="morning">08:00 - 12:00</vaadin-radio-button>
+      <vaadin-radio-button name="time" value="afternoon">12:00 - 16:00</vaadin-radio-button>
+      <vaadin-radio-button name="time" value="evening">16:00 - 20:00</vaadin-radio-button>
+    </vaadin-radio-group>
 
     <br />
     <br />
 
     <!-- Text field -->
-    <v-text-field
+    <vaadin-text-field
       label="Name"
       error-message="This field is required"
       helper-text="Enter your first name"
       required
-    ></v-text-field>
+    ></vaadin-text-field>
 
     <br />
     <br />
 
     <!-- Number field -->
-    <v-number-field
+    <vaadin-number-field
       label="Price"
       value="0"
       step="2"
       error-message="This field is required"
       required
       has-controls
-    ></v-number-field>
+    ></vaadin-number-field>
 
     <br />
     <br />
 
     <!-- Select -->
-    <v-select label="Status" error-message="This field is required" helper-text="Select the role" required>
+    <vaadin-select label="Status" error-message="This field is required" helper-text="Select the role" required>
       <template>
         <vaadin-list-box>
           <vaadin-item>New issue</vaadin-item>
@@ -84,7 +84,7 @@
           <vaadin-item>Completed</vaadin-item>
         </vaadin-list-box>
       </template>
-    </v-select>
+    </vaadin-select>
 
     <script type="module">
       import '@vaadin/vaadin-list-box';

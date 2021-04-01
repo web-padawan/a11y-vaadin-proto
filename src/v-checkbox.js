@@ -9,7 +9,7 @@ export class VCheckbox extends SlotLabelMixin(
   CheckedMixin(InputAriaMixin(ActiveMixin(ThemableMixin(PolymerElement))))
 ) {
   static get is() {
-    return 'v-checkbox';
+    return 'vaadin-checkbox';
   }
 
   static get template() {

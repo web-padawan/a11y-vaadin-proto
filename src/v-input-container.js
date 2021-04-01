@@ -3,7 +3,7 @@ import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 
 export class VInputContainer extends ThemableMixin(PolymerElement) {
   static get is() {
-    return 'v-input-container';
+    return 'vaadin-input-container';
   }
 
   static get template() {

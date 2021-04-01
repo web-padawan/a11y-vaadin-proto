@@ -10,7 +10,7 @@ import '@vaadin/vaadin-list-box/theme/lumo/vaadin-list-box.js';
 import './text-field.js';
 
 registerStyles(
-  'v-select',
+  'vaadin-select',
   css`
     [part='input-field'] ::slotted(button[slot='input']) {
       text-align: left;
@@ -35,7 +35,7 @@ registerStyles(
 );
 
 registerStyles(
-  'v-select-overlay',
+  'vaadin-select-overlay',
   css`
     :host {
       --_lumo-item-selected-icon-display: block;

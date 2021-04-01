@@ -6,7 +6,7 @@ import './v-input-container.js';
 
 export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement)) {
   static get is() {
-    return 'v-number-field';
+    return 'vaadin-number-field';
   }
 
   static get template() {
@@ -39,7 +39,7 @@ export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement))
           <slot name="label"></slot>
         </div>
 
-        <v-input-container part="input-field">
+        <vaadin-input-container part="input-field">
           <div
             disabled$="[[!_allowed(-1, value, min, max, step)]]"
             part="decrease-button"
@@ -60,7 +60,7 @@ export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement))
             hidden$="[[!hasControls]]"
             slot="suffix"
           ></div>
-        </v-input-container>
+        </vaadin-input-container>
 
         <div part="helper-text" on-click="focus">
           <slot name="helper"></slot>

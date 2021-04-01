@@ -12,7 +12,7 @@ export class VCheckboxGroup extends ValidateMixin(
   HelperTextMixin(LabelMixin(FocusMixin(DisabledMixin(ThemableMixin(PolymerElement)))))
 ) {
   static get is() {
-    return 'v-checkbox-group';
+    return 'vaadin-checkbox-group';
   }
 
   static get template() {

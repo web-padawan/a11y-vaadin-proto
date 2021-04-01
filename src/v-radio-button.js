@@ -9,7 +9,7 @@ export class VRadioButton extends SlotLabelMixin(
   CheckedMixin(InputAriaMixin(ActiveMixin(ThemableMixin(PolymerElement))))
 ) {
   static get is() {
-    return 'v-radio-button';
+    return 'vaadin-radio-button';
   }
 
   static get template() {

@@ -3,7 +3,7 @@ import '@vaadin/vaadin-lumo-styles/color.js';
 import '@vaadin/vaadin-lumo-styles/style.js';
 
 registerStyles(
-  'v-checkbox',
+  'vaadin-checkbox',
   css`
     :host {
       -webkit-tap-highlight-color: transparent;

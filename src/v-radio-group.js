@@ -12,7 +12,7 @@ export class VRadioGroup extends ValidateMixin(
   HelperTextMixin(LabelMixin(FocusMixin(DisabledMixin(ThemableMixin(PolymerElement)))))
 ) {
   static get is() {
-    return 'v-radio-group';
+    return 'vaadin-radio-group';
   }
 
   static get template() {

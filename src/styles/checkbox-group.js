@@ -3,7 +3,7 @@ import '@vaadin/vaadin-lumo-styles/color.js';
 import '@vaadin/vaadin-lumo-styles/mixins/required-field.js';
 
 registerStyles(
-  'v-checkbox-group',
+  'vaadin-checkbox-group',
   css`
     :host {
       color: var(--lumo-body-text-color);

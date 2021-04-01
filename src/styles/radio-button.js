@@ -3,7 +3,7 @@ import '@vaadin/vaadin-lumo-styles/color.js';
 import '@vaadin/vaadin-lumo-styles/style.js';
 
 registerStyles(
-  'v-radio-button',
+  'vaadin-radio-button',
   css`
     :host {
       -webkit-tap-highlight-color: transparent;

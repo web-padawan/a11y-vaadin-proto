@@ -15,7 +15,7 @@ export class VSelect extends DelegateFocusMixin(
   ValidateMixin(HelperTextMixin(LabelMixin(SlotMixin(ThemableMixin(PolymerElement)))))
 ) {
   static get is() {
-    return 'v-select';
+    return 'vaadin-select';
   }
 
   static get template() {
@@ -27,11 +27,11 @@ export class VSelect extends DelegateFocusMixin(
           <slot name="label"></slot>
         </div>
 
-        <v-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]" on-click="_onClick">
+        <vaadin-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]" on-click="_onClick">
           <slot name="prefix" slot="prefix"></slot>
           <slot name="input" slot="input"></slot>
           <div part="toggle-button" slot="suffix"></div>
-        </v-input-container>
+        </vaadin-input-container>
 
         <div part="helper-text" on-click="focus">
           <slot name="helper"></slot>
@@ -42,12 +42,12 @@ export class VSelect extends DelegateFocusMixin(
         </div>
       </div>
 
-      <v-select-overlay
+      <vaadin-select-overlay
         opened="{{opened}}"
         with-backdrop="[[_phone]]"
         phone$="[[_phone]]"
         theme$="[[theme]]"
-      ></v-select-overlay>
+      ></vaadin-select-overlay>
 
       <iron-media-query query="[[_phoneMediaQuery]]" query-matches="{{_phone}}"></iron-media-query>
 
@@ -225,7 +225,7 @@ export class VSelect extends DelegateFocusMixin(
   ready() {
     super.ready();
 
-    this._overlayElement = this.shadowRoot.querySelector('v-select-overlay');
+    this._overlayElement = this.shadowRoot.querySelector('vaadin-select-overlay');
 
     this._toggleElement = this.shadowRoot.querySelector('[part~="input-field"]');
 

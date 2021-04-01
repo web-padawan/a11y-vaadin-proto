@@ -9,7 +9,7 @@ import '@vaadin/vaadin-lumo-styles/font-icons.js';
 import '@vaadin/vaadin-lumo-styles/mixins/field-button.js';
 
 registerStyles(
-  'v-text-field',
+  'vaadin-text-field',
   css`
     :host {
       --lumo-text-field-size: var(--lumo-size-m);

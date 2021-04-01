@@ -3,7 +3,7 @@ import '@vaadin/vaadin-lumo-styles/color.js';
 import '@vaadin/vaadin-lumo-styles/mixins/required-field.js';
 
 registerStyles(
-  'v-radio-group',
+  'vaadin-radio-group',
   css`
     :host {
       color: var(--lumo-body-text-color);

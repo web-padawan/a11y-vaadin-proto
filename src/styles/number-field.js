@@ -5,7 +5,7 @@ import '@vaadin/vaadin-lumo-styles/mixins/field-button.js';
 import './text-field.js';
 
 registerStyles(
-  'v-number-field',
+  'vaadin-number-field',
   css`
     :host {
       width: 8em;
