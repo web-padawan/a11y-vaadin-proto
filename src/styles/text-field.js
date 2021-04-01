@@ -48,8 +48,7 @@ registerStyles(
       transition: color 0.2s;
     }
 
-    :host([focused]) [part='input-field'] ::slotted(input),
-    :host([focused]) [part='input-field'] ::slotted(textarea) {
+    :host([focused]) [part='input-field'] ::slotted([slot='input']) {
       -webkit-mask-image: none;
       mask-image: none;
     }

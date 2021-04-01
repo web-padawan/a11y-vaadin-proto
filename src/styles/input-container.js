@@ -21,8 +21,7 @@ registerStyles(
       box-sizing: border-box;
     }
 
-    ::slotted(input),
-    ::slotted(textarea) {
+    ::slotted([slot='input']) {
       cursor: inherit;
       min-height: var(--lumo-text-field-size);
       padding: 0 0.25em;

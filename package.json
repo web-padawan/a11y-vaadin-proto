@@ -8,8 +8,12 @@
     "start": "web-dev-server --node-resolve"
   },
   "dependencies": {
+    "@polymer/iron-media-query": "^3.0.1",
     "@polymer/polymer": "^3.4.1",
+    "@vaadin/vaadin-item": "^3.0.0",
+    "@vaadin/vaadin-list-box": "^2.0.0",
     "@vaadin/vaadin-lumo-styles": "^1.6.1",
+    "@vaadin/vaadin-overlay": "^3.5.1",
     "@vaadin/vaadin-themable-mixin": "^1.6.2"
   },
   "devDependencies": {

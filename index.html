@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>a11y proto</title>
+    <title>Demo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
@@ -72,7 +72,23 @@
       has-controls
     ></v-number-field>
 
+    <br />
+    <br />
+
+    <!-- Select -->
+    <v-select label="Status" error-message="This field is required" helper-text="Select the role" required>
+      <template>
+        <vaadin-list-box>
+          <vaadin-item>New issue</vaadin-item>
+          <vaadin-item>In progress</vaadin-item>
+          <vaadin-item>Completed</vaadin-item>
+        </vaadin-list-box>
+      </template>
+    </v-select>
+
     <script type="module">
+      import '@vaadin/vaadin-list-box';
+      import '@vaadin/vaadin-item';
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
@@ -80,12 +96,14 @@
       import './src/styles/input-container.js';
       import './src/styles/text-field.js';
       import './src/styles/number-field.js';
+      import './src/styles/select.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';
       import './src/v-radio-group.js';
       import './src/v-text-field.js';
       import './src/v-number-field.js';
+      import './src/v-select.js';
     </script>
   </body>
 </html>

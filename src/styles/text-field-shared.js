@@ -43,8 +43,7 @@ registerStyles(
     }
 
     /* Reset the native input styles */
-    [part='input-field'] ::slotted(input),
-    [part='input-field'] ::slotted(textarea) {
+    [part='input-field'] ::slotted([slot='input']) {
       -webkit-appearance: none;
       -moz-appearance: none;
       outline: none;
@@ -66,8 +65,7 @@ registerStyles(
       flex: none;
     }
 
-    [part='input-field'] ::slotted(input),
-    [part='input-field'] ::slotted(textarea) {
+    [part='input-field'] ::slotted([slot='input']) {
       flex: auto;
       white-space: nowrap;
       overflow: hidden;

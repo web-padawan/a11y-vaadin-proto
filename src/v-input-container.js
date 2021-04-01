@@ -19,8 +19,7 @@ export class VInputContainer extends ThemableMixin(PolymerElement) {
         }
 
         /* Reset the native input styles */
-        ::slotted(input),
-        ::slotted(textarea) {
+        ::slotted([slot='input']) {
           -webkit-appearance: none;
           -moz-appearance: none;
           outline: none;
@@ -42,8 +41,7 @@ export class VInputContainer extends ThemableMixin(PolymerElement) {
           flex: none;
         }
 
-        ::slotted(input),
-        ::slotted(textarea) {
+        ::slotted([slot='input']) {
           flex: auto;
           white-space: nowrap;
           overflow: hidden;
@@ -80,7 +78,6 @@ export class VInputContainer extends ThemableMixin(PolymerElement) {
       }
     };
   }
-
 }
 
 customElements.define(VInputContainer.is, VInputContainer);
