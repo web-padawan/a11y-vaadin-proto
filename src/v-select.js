@@ -27,7 +27,7 @@ export class VSelect extends DelegateFocusMixin(
           <slot name="label"></slot>
         </div>
 
-        <v-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]">
+        <v-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]" on-click="_onClick">
           <slot name="prefix" slot="prefix"></slot>
           <slot name="input" slot="input"></slot>
           <div part="toggle-button" slot="suffix"></div>
@@ -69,6 +69,27 @@ export class VSelect extends DelegateFocusMixin(
         notify: true,
         reflectToAttribute: true,
         observer: '_openedChanged'
+      },
+
+      /**
+       * It stores the the `value` property of the selected item, providing the
+       * value for iron-form.
+       * When there’s an item selected, it's the value of that item, otherwise
+       * it's an empty string.
+       * On change or initialization, the component finds the item which matches the
+       * value and displays it.
+       * If no value is provided to the component, it selects the first item without
+       * value or empty value.
+       * Hint: If you do not want to select any item by default, you can either set all
+       * the values of inner vaadin-items, or set the vaadin-select value to
+       * an inexistent value in the items list.
+       * @type {string}
+       */
+      value: {
+        type: String,
+        value: '',
+        notify: true,
+        observer: '_valueChanged'
       },
 
       /**
@@ -170,7 +191,6 @@ export class VSelect extends DelegateFocusMixin(
     this._fieldId = `${this.localName}-${uniqueId}`;
 
     this._boundSetPosition = this._setPosition.bind(this);
-    this._boundOnClick = this._onClick.bind(this);
     this._boundOnKeyDown = this._onKeyDown.bind(this);
   }
 
@@ -186,7 +206,6 @@ export class VSelect extends DelegateFocusMixin(
       this._updateAriaRequired(this.required);
 
       this._updateAriaExpanded(this._buttonNode);
-      this._buttonNode.addEventListener('click', this._boundOnClick);
       this._buttonNode.addEventListener('keydown', this._boundOnKeyDown);
     }
   }
@@ -196,7 +215,6 @@ export class VSelect extends DelegateFocusMixin(
     super.disconnectedCallback();
     this.removeEventListener('iron-resize', this._boundSetPosition);
     if (this._buttonNode) {
-      this._buttonNode.removeEventListener('click', this._boundOnClick);
       this._buttonNode.removeEventListener('keydown', this._boundOnKeyDown);
     }
     // Making sure the select is closed and removed from DOM after detaching the select.
@@ -209,8 +227,7 @@ export class VSelect extends DelegateFocusMixin(
 
     this._overlayElement = this.shadowRoot.querySelector('v-select-overlay');
 
-    // TODO: handle click here or let the slotted button do that?
-    this._toggleElement = this.shadowRoot.querySelector('[part="toggle-button"]');
+    this._toggleElement = this.shadowRoot.querySelector('[part~="input-field"]');
 
     this._observer = new FlattenedNodesObserver(this, (info) => this._setTemplateFromNodes(info.addedNodes));
     this._observer.flush();
@@ -324,7 +341,6 @@ export class VSelect extends DelegateFocusMixin(
       return;
     }
 
-    console.log('validate on value change');
     this.validate();
   }
 
@@ -385,7 +401,6 @@ export class VSelect extends DelegateFocusMixin(
           this.setAttribute('focus-ring', '');
         }
       }
-      console.log('validate on close');
       this.validate();
       window.removeEventListener('scroll', this._boundSetPosition, true);
     }
@@ -484,18 +499,16 @@ export class VSelect extends DelegateFocusMixin(
    * @protected
    */
   _setFocused(focused) {
-    console.log('set focused', focused);
     super._setFocused(focused);
 
     if (!focused) {
-      console.log('validate on blur');
       this.validate();
     }
   }
 
   /** @private */
   _setPosition() {
-    const inputRect = this.shadowRoot.querySelector('[part~="input-field"]').getBoundingClientRect();
+    const inputRect = this._toggleElement.getBoundingClientRect();
     const viewportHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
     const bottomAlign = inputRect.top > (viewportHeight - inputRect.height) / 2;
 

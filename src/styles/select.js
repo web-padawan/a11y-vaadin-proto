@@ -13,10 +13,13 @@ registerStyles(
   'v-select',
   css`
     [part='input-field'] ::slotted(button[slot='input']) {
+      text-align: left;
+    }
+
+    :host(:not([has-value])) [part='input-field'] ::slotted(button[slot='input']) {
       color: inherit;
       transition: opacity 0.175s 0.1s;
       opacity: 0.5;
-      text-align: left;
     }
 
     [part='toggle-button']::before {
