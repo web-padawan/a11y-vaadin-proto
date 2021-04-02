@@ -86,9 +86,21 @@
       </template>
     </vaadin-select>
 
+    <br />
+    <br />
+
+    <vaadin-time-picker
+      label="Time"
+      error-message="This field is required"
+      helper-text="Choose appointment time"
+      required
+    ></vaadin-time-picker>
+
     <script type="module">
       import '@vaadin/vaadin-list-box';
       import '@vaadin/vaadin-item';
+      import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-dropdown-styles.js';
+      import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-item-styles.js';
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
@@ -97,6 +109,7 @@
       import './src/styles/text-field.js';
       import './src/styles/number-field.js';
       import './src/styles/select.js';
+      import './src/styles/time-picker.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';
@@ -104,6 +117,7 @@
       import './src/v-text-field.js';
       import './src/v-number-field.js';
       import './src/v-select.js';
+      import './src/v-time-picker.js';
     </script>
   </body>
 </html>

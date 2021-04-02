@@ -10,6 +10,7 @@
   "dependencies": {
     "@polymer/iron-media-query": "^3.0.1",
     "@polymer/polymer": "^3.4.1",
+    "@vaadin/vaadin-combo-box": "^6.0.1",
     "@vaadin/vaadin-item": "^3.0.0",
     "@vaadin/vaadin-list-box": "^2.0.0",
     "@vaadin/vaadin-lumo-styles": "^1.6.1",
