@@ -5,96 +5,110 @@
     <title>Demo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      section {
+        min-width: 440px;
+        margin: 1rem;
+        padding: 1rem;
+        border: solid 1px #ccc;
+      }
+
+      h2 {
+        margin: 0 0 1rem;
+        font-size: 1.25rem;
+      }
+    </style>
   </head>
   <body>
-    <!-- Checkbox -->
-    <vaadin-checkbox>I accept <a href="#">Terms and conditions</a></vaadin-checkbox>
-    <vaadin-checkbox checked indeterminate label="Check me"></vaadin-checkbox>
+    <section>
+      <h2>Checkbox</h2>
+      <vaadin-checkbox>I accept <a href="#">Terms and conditions</a></vaadin-checkbox>
+      <vaadin-checkbox checked indeterminate label="Select all"></vaadin-checkbox>
+    </section>
 
-    <br />
-    <br />
+    <section>
+      <h2>Radio button</h2>
+      <vaadin-radio-button name="account" value="existing">Use <a href="#">existing account</a></vaadin-radio-button>
+      <vaadin-radio-button name="account" value="new" checked label="Create new account"></vaadin-radio-button>
+    </section>
 
-    <!-- Radio button -->
-    <vaadin-radio-button name="account" value="existing">Use <a href="#">existing account</a></vaadin-radio-button>
-    <vaadin-radio-button name="account" value="new" checked label="Create new account"></vaadin-radio-button>
+    <section>
+      <h2>Checkbox group</h2>
+      <vaadin-checkbox-group
+        required
+        label="Choose your meal"
+        helper-text="Select at least one"
+        error-message="This field is required"
+      >
+        <vaadin-checkbox value="pizza">Pizza</vaadin-checkbox>
+        <vaadin-checkbox value="fish">Fish</vaadin-checkbox>
+        <vaadin-checkbox value="veggies">Veggies</vaadin-checkbox>
+      </vaadin-checkbox-group>
+    </section>
 
-    <br />
-    <br />
+    <section>
+      <h2>Radio group</h2>
+      <vaadin-radio-group
+        required
+        label="Delivery time"
+        helper-text="We will call to confirm"
+        error-message="This field is required"
+      >
+        <vaadin-radio-button name="time" value="morning">08:00 - 12:00</vaadin-radio-button>
+        <vaadin-radio-button name="time" value="afternoon">12:00 - 16:00</vaadin-radio-button>
+        <vaadin-radio-button name="time" value="evening">16:00 - 20:00</vaadin-radio-button>
+      </vaadin-radio-group>
+    </section>
 
-    <!-- Checkbox group -->
-    <vaadin-checkbox-group
-      required
-      label="Choose your meal"
-      helper-text="Select at least one"
-      error-message="This field is required"
-    >
-      <vaadin-checkbox value="pizza">Pizza</vaadin-checkbox>
-      <vaadin-checkbox value="fish">Fish</vaadin-checkbox>
-      <vaadin-checkbox value="veggies">Veggies</vaadin-checkbox>
-    </vaadin-checkbox-group>
+    <section>
+      <h2>Text field</h2>
+      <vaadin-text-field
+        label="Name"
+        error-message="This field is required"
+        helper-text="Enter your first name"
+        required
+      ></vaadin-text-field>
+    </section>
 
-    <br />
-    <br />
+    <section>
+      <h2>Number field</h2>
+      <vaadin-number-field
+        label="Price"
+        value="0"
+        step="2"
+        error-message="This field is required"
+        required
+        has-controls
+      ></vaadin-number-field>
+    </section>
 
-    <!-- Radio group -->
-    <vaadin-radio-group
-      required
-      label="Delivery time"
-      helper-text="We will call to confirm"
-      error-message="This field is required"
-    >
-      <vaadin-radio-button name="time" value="morning">08:00 - 12:00</vaadin-radio-button>
-      <vaadin-radio-button name="time" value="afternoon">12:00 - 16:00</vaadin-radio-button>
-      <vaadin-radio-button name="time" value="evening">16:00 - 20:00</vaadin-radio-button>
-    </vaadin-radio-group>
+    <section>
+      <h2>Select</h2>
+      <vaadin-select label="Status" error-message="This field is required" helper-text="Select the role" required>
+        <template>
+          <vaadin-list-box>
+            <vaadin-item>New issue</vaadin-item>
+            <vaadin-item>In progress</vaadin-item>
+            <vaadin-item>Completed</vaadin-item>
+          </vaadin-list-box>
+        </template>
+      </vaadin-select>
+    </section>
 
-    <br />
-    <br />
-
-    <!-- Text field -->
-    <vaadin-text-field
-      label="Name"
-      error-message="This field is required"
-      helper-text="Enter your first name"
-      required
-    ></vaadin-text-field>
-
-    <br />
-    <br />
-
-    <!-- Number field -->
-    <vaadin-number-field
-      label="Price"
-      value="0"
-      step="2"
-      error-message="This field is required"
-      required
-      has-controls
-    ></vaadin-number-field>
-
-    <br />
-    <br />
-
-    <!-- Select -->
-    <vaadin-select label="Status" error-message="This field is required" helper-text="Select the role" required>
-      <template>
-        <vaadin-list-box>
-          <vaadin-item>New issue</vaadin-item>
-          <vaadin-item>In progress</vaadin-item>
-          <vaadin-item>Completed</vaadin-item>
-        </vaadin-list-box>
-      </template>
-    </vaadin-select>
-
-    <br />
-    <br />
-
-    <vaadin-time-picker
-      label="Time"
-      error-message="This field is required"
-      helper-text="Choose appointment time"
-      required
-    ></vaadin-time-picker>
+    <section>
+      <h2>Time picker</h2>
+      <vaadin-time-picker
+        label="Time"
+        error-message="This field is required"
+        helper-text="Choose appointment time"
+        required
+      ></vaadin-time-picker>
+    </section>
 
     <script type="module">
       import '@vaadin/vaadin-list-box';
