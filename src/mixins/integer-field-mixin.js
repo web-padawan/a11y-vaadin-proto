@@ -61,8 +61,8 @@ const IntegerFieldMixinImplementation = (superclass) =>
      * @param {!KeyboardEvent} e
      * @protected
      */
-    _onKeyDown(e) {
-      super._onKeyDown(e);
+    _handleKeyDown(e) {
+      super._handleKeyDown(e);
 
       if (this._enabledCharPattern && !this.__shouldAcceptKey(e)) {
         e.preventDefault();

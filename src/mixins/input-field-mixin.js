@@ -84,6 +84,7 @@ const InputFieldMixinImplementation = (superclass) =>
       this._boundOnFocus = this._onFocus.bind(this);
     }
 
+    /** @protected */
     connectedCallback() {
       super.connectedCallback();
 
@@ -99,20 +100,13 @@ const InputFieldMixinImplementation = (superclass) =>
       }
     }
 
+    /** @protected */
     disconnectedCallback() {
       super.disconnectedCallback();
 
       if (this._inputNode) {
         this._removeInputListeners(this._inputNode);
       }
-    }
-
-    ready() {
-      super.ready();
-
-      this.addEventListener('keydown', (e) => this._onKeyDown(e));
-
-      // TODO: clear button
     }
 
     clear() {
@@ -176,22 +170,6 @@ const InputFieldMixinImplementation = (superclass) =>
     /** @private */
     _onBlur() {
       this.validate();
-    }
-
-    /**
-     * @param {!KeyboardEvent} e
-     * @protected
-     */
-    _onKeyDown(e) {
-      if (e.key === 'Escape' && this.clearButtonVisible) {
-        const dispatchChange = !!this.value;
-        this.clear();
-        dispatchChange && this.inputElement.dispatchEvent(new Event('change'));
-      }
-
-      if (this._enabledCharPattern && !this.__shouldAcceptKey(e)) {
-        e.preventDefault();
-      }
     }
 
     /**

@@ -30,6 +30,7 @@ export class VComboBox extends ComboBoxDataProviderMixin(
           <slot name="prefix" slot="prefix"></slot>
           <slot name="input" slot="input"></slot>
           <slot name="suffix" slot="suffix"></slot>
+          <div id="clearButton" part="clear-button" slot="suffix"></div>
           <div id="toggleButton" part="toggle-button" slot="suffix"></div>
         </vaadin-input-container>
 
@@ -99,12 +100,17 @@ export class VComboBox extends ComboBoxDataProviderMixin(
   }
 
   /** @protected */
+  get _clearOnEsc() {
+    return false;
+  }
+
+  /** @protected */
   connectedCallback() {
     super.connectedCallback();
 
-    if (this._inputNode) {
-      this._inputNode.addEventListener('keydown', this._boundOnKeyDown);
+    this._preventInputBlur();
 
+    if (this._inputNode) {
       this._inputNode.setAttribute('role', 'combobox');
       this._inputNode.setAttribute('aria-autocomplete', 'list');
       this._inputNode.setAttribute('aria-expanded', 'false');
@@ -118,11 +124,50 @@ export class VComboBox extends ComboBoxDataProviderMixin(
   }
 
   /** @protected */
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._restoreInputBlur();
+  }
+
+  /** @protected */
   ready() {
     super.ready();
 
     this._positionTarget = this.shadowRoot.querySelector('vaadin-input-container');
     this._toggleElement = this.$.toggleButton;
+    this._clearElement = this.$.clearButton;
+  }
+
+  // TODO: here we override `validate` and `checkValidity` from ComboBoxMixin
+
+  /**
+   * Returns true if `value` is valid.
+   *
+   * @return {boolean} True if the value is valid.
+   */
+  validate() {
+    return !(this.invalid = !this.checkValidity());
+  }
+
+  /**
+   * Returns true if the current input value satisfies all constraints (if any)
+   * @return {boolean}
+   */
+  checkValidity() {
+    return !this.required || !!this.value;
+  }
+
+  /**
+   * @param {boolean} focused
+   * @protected
+   */
+  _setFocused(focused) {
+    super._setFocused(focused);
+
+    if (!focused) {
+      this.validate();
+    }
   }
 
   /** @protected */
@@ -132,10 +177,15 @@ export class VComboBox extends ComboBoxDataProviderMixin(
 
     const path = e.composedPath();
 
-    if (path.indexOf(this._toggleElement) > -1 && this.opened) {
-      this.close();
-    } else if (path.indexOf(this._toggleElement) > -1 || !this.autoOpenDisabled) {
-      this.open();
+    if (path.indexOf(this._clearElement) !== -1) {
+      this._clear();
+      this.focus();
+    } else if (path.indexOf(this._toggleElement) !== -1) {
+      if (this.opened) {
+        this.close();
+      } else if (!this.autoOpenDisabled) {
+        this.open();
+      }
     }
 
     this._closeOnBlurIsPrevented = false;

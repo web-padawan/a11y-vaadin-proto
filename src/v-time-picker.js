@@ -34,7 +34,8 @@ export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(P
           <vaadin-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]" class="input">
             <slot name="prefix" slot="prefix"></slot>
             <slot name="input" slot="input"></slot>
-            <div part="toggle-button" slot="suffix"></div>
+            <div id="clearButton" part="clear-button" slot="suffix"></div>
+            <div id="toggleButton" part="toggle-button" slot="suffix"></div>
           </vaadin-input-container>
         </vaadin-time-picker-dropdown>
 
@@ -198,6 +199,11 @@ export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(P
     };
   }
 
+  /** @protected */
+  get _clearOnEsc() {
+    return false;
+  }
+
   /** @private */
   get __dropdownElement() {
     return this.$.dropdown;
@@ -246,8 +252,6 @@ export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(P
     super.connectedCallback();
 
     if (this._inputNode) {
-      this._inputNode.addEventListener('keydown', this._boundOnKeyDown);
-
       this._inputNode.setAttribute('role', 'combobox');
       this._inputNode.setAttribute('aria-autocomplete', 'list');
       this._inputNode.setAttribute('aria-expanded', 'false');
@@ -444,6 +448,8 @@ export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(P
     } else {
       this.__updateInputValue(parsedObj);
     }
+
+    this.toggleAttribute('has-value', Boolean(this.value));
   }
 
   /** @private */

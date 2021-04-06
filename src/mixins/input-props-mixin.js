@@ -8,6 +8,17 @@ const InputPropsMixinImplementation = (superclass) =>
     static get properties() {
       return {
         /**
+         * Set to true to display the clear icon which clears the input.
+         * @attr {boolean} clear-button-visible
+         * @type {boolean}
+         */
+        clearButtonVisible: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false
+        },
+
+        /**
          * A hint to the user of what can be entered in the control.
          */
         placeholder: {
@@ -50,6 +61,11 @@ const InputPropsMixinImplementation = (superclass) =>
     }
 
     /** @protected */
+    get _clearOnEsc() {
+      return true;
+    }
+
+    /** @protected */
     connectedCallback() {
       super.connectedCallback();
 
@@ -65,8 +81,24 @@ const InputPropsMixinImplementation = (superclass) =>
     ready() {
       super.ready();
 
+      this._clearElement = this.$.clearButton;
+
+      this.addEventListener('keydown', (e) => this._handleKeyDown(e));
+
       // create observer dynamically to allow subclasses to override hostProps
       this._createMethodObserver(`_hostPropsChanged(${this.constructor.hostProps.join(', ')})`);
+    }
+
+    /**
+     * @param {Event} event
+     * @protected
+     */
+    _handleKeyDown(event) {
+      if (event.key === 'Escape' && this.clearButtonVisible && this._clearOnEsc) {
+        const dispatchChange = !!this.value;
+        this.clear();
+        dispatchChange && this.inputElement.dispatchEvent(new Event('change'));
+      }
     }
 
     /** @private */

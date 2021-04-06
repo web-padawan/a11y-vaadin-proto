@@ -67,6 +67,9 @@ class VTimePickerDropdown extends ThemableMixin(ComboBoxMixin(PolymerElement)) {
 
     this.positionTarget = this.querySelector('vaadin-input-container');
     this._toggleElement = this.querySelector('[part="toggle-button"]');
+    this._clearElement = this.querySelector('[part="clear-button"]');
+
+    this._preventInputBlur();
   }
 
   setInput(input) {
@@ -83,10 +86,15 @@ class VTimePickerDropdown extends ThemableMixin(ComboBoxMixin(PolymerElement)) {
 
     const path = e.composedPath();
 
-    if (path.indexOf(this._toggleElement) > -1 && this.opened) {
-      this.close();
-    } else if (path.indexOf(this._toggleElement) > -1 || !this.autoOpenDisabled) {
-      this.open();
+    if (path.indexOf(this._clearElement) !== -1) {
+      this._clear();
+      this.focus();
+    } else if (path.indexOf(this._toggleElement) !== -1) {
+      if (this.opened) {
+        this.close();
+      } else if (!this.autoOpenDisabled) {
+        this.open();
+      }
     }
 
     this._closeOnBlurIsPrevented = false;

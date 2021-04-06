@@ -118,6 +118,10 @@ registerStyles(
       color: var(--lumo-error-text-color);
     }
 
+    [part='clear-button']::before {
+      content: var(--lumo-icons-cross);
+    }
+
     /* TODO: theme variants and RTL styles are missing */
   `,
   { moduleId: 'lumo-text-field', include: ['lumo-required-field', 'lumo-field-button'] }
