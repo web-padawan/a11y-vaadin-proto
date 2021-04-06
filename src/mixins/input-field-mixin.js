@@ -1,11 +1,9 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
 import { HelperTextMixin } from './helper-text-mixin.js';
-import { InputAriaMixin } from './input-aria-mixin.js';
-import { ValidateMixin } from './validate-mixin.js';
-import { SlotStylesMixin } from './slot-styles-mixin.js';
+import { InputPropsMixin } from './input-props-mixin.js';
 
 const InputFieldMixinImplementation = (superclass) =>
-  class InputFieldMixinClass extends SlotStylesMixin(HelperTextMixin(ValidateMixin(InputAriaMixin(superclass)))) {
+  class InputFieldMixinClass extends HelperTextMixin(InputPropsMixin(superclass)) {
     static get properties() {
       return {
         /**
@@ -62,58 +60,12 @@ const InputFieldMixinImplementation = (superclass) =>
           value: '',
           observer: '_valueChanged',
           notify: true
-        },
-
-        /**
-         * A hint to the user of what can be entered in the control.
-         */
-        placeholder: {
-          type: String
-        },
-
-        /**
-         * This attribute indicates that the user cannot modify the value of the control.
-         */
-        readonly: {
-          type: Boolean,
-          reflectToAttribute: true
         }
       };
     }
 
     static get hostProps() {
-      return [
-        'autofocus',
-        'autocapitalize',
-        'autocomplete',
-        'autocorrect',
-        'name',
-        'placeholder',
-        'disabled',
-        'readonly',
-        'required'
-      ];
-    }
-
-    get slotStyles() {
-      return {
-        ...super.slotStyles,
-        input: `
-          input::placeholder,
-          textarea::placeholder {
-            color: inherit;
-            transition: opacity 0.175s 0.1s;
-            opacity: 0.5;
-          }
-
-          [readonly] > input::placeholder,
-          [readonly] > textarea::placeholder,
-          [disabled] > input::placeholder,
-          [disabled] > textarea::placeholder {
-            opacity: 0;
-          }
-        `
-      };
+      return [...super.hostProps, 'autofocus', 'autocapitalize', 'autocomplete', 'autocorrect'];
     }
 
     /**
@@ -140,15 +92,10 @@ const InputFieldMixinImplementation = (superclass) =>
 
         this._addInputListeners(this._inputNode);
 
-        this._validateSlottedValue(this._inputNode);
-
         if (this.value) {
           this._inputNode.value = this.value;
           this.validate();
         }
-
-        // Propagate initially defined properties to the slotted input
-        this._propagateHostAttributes(this.constructor.hostProps.map((attr) => this[attr]));
       }
     }
 
@@ -164,9 +111,6 @@ const InputFieldMixinImplementation = (superclass) =>
       super.ready();
 
       this.addEventListener('keydown', (e) => this._onKeyDown(e));
-
-      // create observer dynamically to allow subclasses to override hostProps
-      this._createMethodObserver(`_hostPropsChanged(${this.constructor.hostProps.join(', ')})`);
 
       // TODO: clear button
     }
@@ -186,42 +130,6 @@ const InputFieldMixinImplementation = (superclass) =>
         return this.inputElement.checkValidity();
       } else {
         return !this.invalid;
-      }
-    }
-
-    /** @private */
-    _hostPropsChanged(...attributesValues) {
-      this._propagateHostAttributes(attributesValues);
-    }
-
-    /** @private */
-    _propagateHostAttributes(attributesValues) {
-      const input = this.inputElement;
-      const attributeNames = this.constructor.hostProps;
-
-      attributeNames.forEach((attr, index) => {
-        this._setOrToggleAttribute(attr, attributesValues[index], input);
-      });
-    }
-
-    /** @private */
-    _validateSlottedValue(slotted) {
-      if (slotted.value !== this.value) {
-        console.warn(`Please define value on the <${this.localName}> component!`);
-        slotted.value = '';
-      }
-    }
-
-    /** @private */
-    _setOrToggleAttribute(name, value, node) {
-      if (!name || !node) {
-        return;
-      }
-
-      if (value) {
-        node.setAttribute(name, typeof value === 'boolean' ? '' : value);
-      } else {
-        node.removeAttribute(name);
       }
     }
 
@@ -327,16 +235,6 @@ const InputFieldMixinImplementation = (superclass) =>
       if (this.invalid) {
         this.validate();
       }
-    }
-
-    /**
-     * @param {boolean} invalid
-     * @protected
-     */
-    _invalidChanged(invalid) {
-      super._invalidChanged(invalid);
-
-      this._setOrToggleAttribute('aria-invalid', invalid ? 'true' : false, this._inputNode);
     }
   };
 

@@ -1,9 +1,7 @@
 import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
-import { DelegateFocusMixin } from './mixins/delegate-focus-mixin.js';
-import { InputAriaMixin } from './mixins/input-aria-mixin.js';
+import { InputPropsMixin } from './mixins/input-props-mixin.js';
 import { HelperTextMixin } from './mixins/helper-text-mixin.js';
-import { ValidateMixin } from './mixins/validate-mixin.js';
 import { ComboBoxMixin } from '@vaadin/vaadin-combo-box/src/vaadin-combo-box-mixin.js';
 import { ComboBoxDataProviderMixin } from '@vaadin/vaadin-combo-box/src/vaadin-combo-box-data-provider-mixin.js';
 import '@vaadin/vaadin-combo-box/src/vaadin-combo-box-dropdown-wrapper.js';
@@ -13,7 +11,7 @@ import './v-time-picker-dropdown';
 import './v-input-container.js';
 
 export class VComboBox extends ComboBoxDataProviderMixin(
-  ComboBoxMixin(DelegateFocusMixin(ValidateMixin(HelperTextMixin(InputAriaMixin(ThemableMixin(PolymerElement))))))
+  ComboBoxMixin(HelperTextMixin(InputPropsMixin(ThemableMixin(PolymerElement))))
 ) {
   static get is() {
     return 'vaadin-combo-box';

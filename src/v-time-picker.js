@@ -1,16 +1,12 @@
 import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
-import { DelegateFocusMixin } from './mixins/delegate-focus-mixin.js';
-import { InputAriaMixin } from './mixins/input-aria-mixin.js';
+import { InputPropsMixin } from './mixins/input-props-mixin.js';
 import { HelperTextMixin } from './mixins/helper-text-mixin.js';
-import { ValidateMixin } from './mixins/validate-mixin.js';
 import './styles/text-field-shared.js';
 import './v-time-picker-dropdown';
 import './v-input-container.js';
 
-export class VTimePicker extends DelegateFocusMixin(
-  ValidateMixin(HelperTextMixin(InputAriaMixin(ThemableMixin(PolymerElement))))
-) {
+export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(PolymerElement))) {
   static get is() {
     return 'vaadin-time-picker';
   }
@@ -199,8 +195,6 @@ export class VTimePicker extends DelegateFocusMixin(
       __dropdownItems: {
         type: Array
       }
-
-      // TODO: placeholder, readonly
     };
   }
 
