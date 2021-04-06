@@ -94,6 +94,7 @@ export class VRadioGroup extends ValidateMixin(
     // See https://github.com/vaadin/vaadin-web-components/issues/94
     this.setAttribute('role', 'radiogroup');
     this.setAttribute('aria-labelledby', this._labelId);
+    this.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
     this._addListeners();
 

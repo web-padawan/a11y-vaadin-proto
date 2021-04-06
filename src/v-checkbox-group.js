@@ -91,9 +91,7 @@ export class VCheckboxGroup extends ValidateMixin(
     // See https://github.com/vaadin/vaadin-web-components/issues/94
     this.setAttribute('role', 'group');
     this.setAttribute('aria-labelledby', this._labelId);
-
-    // TODO: should contain errorMessage also?
-    this.setAttribute('aria-describedby', this._helperId);
+    this.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
     const checkedChangedListener = (e) => {
       this._changeSelectedCheckbox(e.target);
