@@ -1,12 +1,12 @@
 import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import { InputPropsMixin } from './mixins/input-props-mixin.js';
-import { HelperTextMixin } from './mixins/helper-text-mixin.js';
+import { FieldAriaMixin } from './mixins/field-aria-mixin.js';
 import './styles/text-field-shared.js';
 import './v-time-picker-dropdown';
 import './v-input-container.js';
 
-export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(PolymerElement))) {
+export class VTimePicker extends FieldAriaMixin(InputPropsMixin(ThemableMixin(PolymerElement))) {
   static get is() {
     return 'vaadin-time-picker';
   }
@@ -200,6 +200,11 @@ export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(P
   }
 
   /** @protected */
+  get _ariaTarget() {
+    return this._inputNode;
+  }
+
+  /** @protected */
   get _clearOnEsc() {
     return false;
   }
@@ -255,8 +260,6 @@ export class VTimePicker extends HelperTextMixin(InputPropsMixin(ThemableMixin(P
       this._inputNode.setAttribute('role', 'combobox');
       this._inputNode.setAttribute('aria-autocomplete', 'list');
       this._inputNode.setAttribute('aria-expanded', 'false');
-
-      this._inputNode.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
       this.$.dropdown.setInput(this._inputNode);
     }

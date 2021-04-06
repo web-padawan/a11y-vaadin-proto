@@ -1,0 +1,54 @@
+import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
+import { HelperTextMixin } from './helper-text-mixin.js';
+import { ValidateMixin } from './validate-mixin.js';
+
+const FieldAriaMixinImplementation = (superclass) =>
+  class FieldAriaMixinClass extends HelperTextMixin(ValidateMixin(superclass)) {
+    /** @protected */
+    get _ariaTarget() {
+      return this;
+    }
+
+    /** @protected */
+    get _ariaAttr() {
+      return 'aria-describedby';
+    }
+
+    /** @protected */
+    connectedCallback() {
+      super.connectedCallback();
+
+      this._updateAriaAttribute();
+    }
+
+    /** @protected */
+    _updateAriaAttribute() {
+      const attr = this._ariaAttr;
+
+      if (this._ariaTarget && attr) {
+        // For groups, add all IDs to aria-labelledby rather than aria-describedby -
+        // that should guarantee that it's announced when the group is entered.
+        const ariaIds = attr === 'aria-describedby' ? [this._helperId] : [this._labelId, this._helperId];
+
+        // Error message ID needs to be dynamically added / removed based on the validity
+        // Otherwise assistive technologies would announce the error, even if we hide it.
+        if (this.invalid) {
+          ariaIds.push(this._errorId);
+        }
+
+        this._ariaTarget.setAttribute(attr, ariaIds.join(' '));
+      }
+    }
+
+    /** @protected */
+    _invalidChanged(invalid) {
+      super._invalidChanged(invalid);
+
+      this._updateAriaAttribute();
+    }
+  };
+
+/**
+ * Mixin to handle ARIA attribute with label, error message and helper text IDs.
+ */
+export const FieldAriaMixin = dedupingMixin(FieldAriaMixinImplementation);

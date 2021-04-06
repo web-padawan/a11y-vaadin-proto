@@ -1,7 +1,7 @@
 import { PolymerElement, html } from '@polymer/polymer';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { InputPropsMixin } from './mixins/input-props-mixin.js';
-import { HelperTextMixin } from './mixins/helper-text-mixin.js';
+import { FieldAriaMixin } from './mixins/field-aria-mixin.js';
 import { ComboBoxMixin } from '@vaadin/vaadin-combo-box/src/vaadin-combo-box-mixin.js';
 import { ComboBoxDataProviderMixin } from '@vaadin/vaadin-combo-box/src/vaadin-combo-box-data-provider-mixin.js';
 import '@vaadin/vaadin-combo-box/src/vaadin-combo-box-dropdown-wrapper.js';
@@ -11,7 +11,7 @@ import './v-time-picker-dropdown';
 import './v-input-container.js';
 
 export class VComboBox extends ComboBoxDataProviderMixin(
-  ComboBoxMixin(HelperTextMixin(InputPropsMixin(ThemableMixin(PolymerElement))))
+  ComboBoxMixin(FieldAriaMixin(InputPropsMixin(ThemableMixin(PolymerElement))))
 ) {
   static get is() {
     return 'vaadin-combo-box';
@@ -81,6 +81,11 @@ export class VComboBox extends ComboBoxDataProviderMixin(
     this._boundInputValueChanged = this._inputValueChanged.bind(this);
   }
 
+  /** @protected */
+  get _ariaTarget() {
+    return this._inputNode;
+  }
+
   /**
    * @return {string}
    * @protected
@@ -114,8 +119,6 @@ export class VComboBox extends ComboBoxDataProviderMixin(
       this._inputNode.setAttribute('role', 'combobox');
       this._inputNode.setAttribute('aria-autocomplete', 'list');
       this._inputNode.setAttribute('aria-expanded', 'false');
-
-      this._inputNode.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
       this._setInputElement(this._inputNode);
       this._nativeInput = this._inputNode;

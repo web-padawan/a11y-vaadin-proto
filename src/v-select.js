@@ -4,16 +4,13 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import { DelegateFocusMixin } from './mixins/delegate-focus-mixin.js';
 import { LabelMixin } from './mixins/label-mixin.js';
-import { HelperTextMixin } from './mixins/helper-text-mixin.js';
+import { FieldAriaMixin } from './mixins/field-aria-mixin.js';
 import { SlotMixin } from './mixins/slot-mixin.js';
-import { ValidateMixin } from './mixins/validate-mixin.js';
 import './styles/text-field-shared.js';
 import './v-select-overlay.js';
 import './v-input-container.js';
 
-export class VSelect extends DelegateFocusMixin(
-  ValidateMixin(HelperTextMixin(LabelMixin(SlotMixin(ThemableMixin(PolymerElement)))))
-) {
+export class VSelect extends DelegateFocusMixin(FieldAriaMixin(LabelMixin(SlotMixin(ThemableMixin(PolymerElement))))) {
   static get is() {
     return 'vaadin-select';
   }
@@ -169,6 +166,11 @@ export class VSelect extends DelegateFocusMixin(
   }
 
   /** @protected */
+  get _ariaTarget() {
+    return this._buttonNode;
+  }
+
+  /** @protected */
   get focusElement() {
     return this._buttonNode;
   }
@@ -201,7 +203,6 @@ export class VSelect extends DelegateFocusMixin(
 
     if (this._buttonNode) {
       this._buttonNode.setAttribute('aria-labelledby', `${this._labelId} ${this._fieldId}`);
-      this._buttonNode.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
       this._updateAriaRequired(this.required);
 

@@ -1,9 +1,9 @@
 import { dedupingMixin } from '@polymer/polymer/lib/utils/mixin.js';
-import { HelperTextMixin } from './helper-text-mixin.js';
+import { FieldAriaMixin } from './field-aria-mixin.js';
 import { InputPropsMixin } from './input-props-mixin.js';
 
 const InputFieldMixinImplementation = (superclass) =>
-  class InputFieldMixinClass extends HelperTextMixin(InputPropsMixin(superclass)) {
+  class InputFieldMixinClass extends FieldAriaMixin(InputPropsMixin(superclass)) {
     static get properties() {
       return {
         /**
@@ -68,6 +68,11 @@ const InputFieldMixinImplementation = (superclass) =>
       return [...super.hostProps, 'autofocus', 'autocapitalize', 'autocomplete', 'autocorrect'];
     }
 
+    /** @protected */
+    get _ariaTarget() {
+      return this._inputNode;
+    }
+
     /**
      * @return {HTMLElement | undefined}}
      * @protected
@@ -89,8 +94,6 @@ const InputFieldMixinImplementation = (superclass) =>
       super.connectedCallback();
 
       if (this._inputNode) {
-        this._inputNode.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
-
         this._addInputListeners(this._inputNode);
 
         if (this.value) {

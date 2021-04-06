@@ -4,13 +4,10 @@ import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { DisabledMixin } from './mixins/disabled-mixin.js';
 import { FocusMixin } from './mixins/focus-mixin.js';
 import { LabelMixin } from './mixins/label-mixin.js';
-import { HelperTextMixin } from './mixins/helper-text-mixin.js';
-import { ValidateMixin } from './mixins/validate-mixin.js';
+import { FieldAriaMixin } from './mixins/field-aria-mixin.js';
 import { VRadioButton } from './v-radio-button.js';
 
-export class VRadioGroup extends ValidateMixin(
-  HelperTextMixin(LabelMixin(FocusMixin(DisabledMixin(ThemableMixin(PolymerElement)))))
-) {
+export class VRadioGroup extends FieldAriaMixin(LabelMixin(FocusMixin(DisabledMixin(ThemableMixin(PolymerElement))))) {
   static get is() {
     return 'vaadin-radio-group';
   }
@@ -83,6 +80,11 @@ export class VRadioGroup extends ValidateMixin(
     };
   }
 
+  /** @protected */
+  get _ariaAttr() {
+    return 'aria-labelledby';
+  }
+
   /** @private */
   get _radioButtons() {
     return this._filterRadioButtons(this.querySelectorAll('*'));
@@ -93,8 +95,6 @@ export class VRadioGroup extends ValidateMixin(
 
     // See https://github.com/vaadin/vaadin-web-components/issues/94
     this.setAttribute('role', 'radiogroup');
-    this.setAttribute('aria-labelledby', this._labelId);
-    this.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
     this._addListeners();
 

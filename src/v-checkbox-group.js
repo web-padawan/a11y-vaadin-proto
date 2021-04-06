@@ -4,12 +4,11 @@ import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { DisabledMixin } from './mixins/disabled-mixin.js';
 import { FocusMixin } from './mixins/focus-mixin.js';
 import { LabelMixin } from './mixins/label-mixin.js';
-import { HelperTextMixin } from './mixins/helper-text-mixin.js';
-import { ValidateMixin } from './mixins/validate-mixin.js';
+import { FieldAriaMixin } from './mixins/field-aria-mixin.js';
 import { VCheckbox } from './v-checkbox.js';
 
-export class VCheckboxGroup extends ValidateMixin(
-  HelperTextMixin(LabelMixin(FocusMixin(DisabledMixin(ThemableMixin(PolymerElement)))))
+export class VCheckboxGroup extends FieldAriaMixin(
+  LabelMixin(FocusMixin(DisabledMixin(ThemableMixin(PolymerElement))))
 ) {
   static get is() {
     return 'vaadin-checkbox-group';
@@ -80,18 +79,22 @@ export class VCheckboxGroup extends ValidateMixin(
     return ['_updateValue(value, value.splices)'];
   }
 
+  /** @protected */
+  get _ariaAttr() {
+    return 'aria-labelledby';
+  }
+
   /** @private */
   get _checkboxes() {
     return this._filterCheckboxes(this.querySelectorAll('*'));
   }
 
+  /** @protected */
   ready() {
     super.ready();
 
     // See https://github.com/vaadin/vaadin-web-components/issues/94
     this.setAttribute('role', 'group');
-    this.setAttribute('aria-labelledby', this._labelId);
-    this.setAttribute('aria-describedby', `${this._helperId} ${this._errorId}`);
 
     const checkedChangedListener = (e) => {
       this._changeSelectedCheckbox(e.target);
