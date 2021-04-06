@@ -101,6 +101,16 @@
     </section>
 
     <section>
+      <h2>Combo box</h2>
+      <vaadin-combo-box
+        label="Country"
+        error-message="This field is required"
+        helper-text="Select a country"
+        required
+      ></vaadin-combo-box>
+    </section>
+
+    <section>
       <h2>Time picker</h2>
       <vaadin-time-picker
         label="Time"
@@ -123,6 +133,7 @@
       import './src/styles/text-field.js';
       import './src/styles/number-field.js';
       import './src/styles/select.js';
+      import './src/styles/combo-box.js';
       import './src/styles/time-picker.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
@@ -131,7 +142,14 @@
       import './src/v-text-field.js';
       import './src/v-number-field.js';
       import './src/v-select.js';
+      import './src/v-combo-box.js';
       import './src/v-time-picker.js';
+
+      (async() => {
+        const res = await fetch('https://demo.vaadin.com/demo-data/1.0/filtered-countries');
+        const json = await res.json();
+        document.querySelector('vaadin-combo-box').items = json.result;
+      })();
     </script>
   </body>
 </html>

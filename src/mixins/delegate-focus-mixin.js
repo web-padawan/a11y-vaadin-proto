@@ -47,7 +47,10 @@ export const DelegateFocusMixinImplementation = (superclass) =>
     _disabledChanged(disabled) {
       super._disabledChanged(disabled);
 
-      this.focusElement.disabled = disabled;
+      if (this.focusElement) {
+        this.focusElement.disabled = disabled;
+      }
+
       if (disabled) {
         this.blur();
       }

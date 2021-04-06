@@ -25,6 +25,7 @@ npm start
 - vaadin-number-field
 - vaadin-text-field
 - vaadin-select
+- vaadin-combo-box
 - vaadin-time-picker
 
 ## Issues
