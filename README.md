@@ -36,3 +36,11 @@ The following issues should be addressed by the new prototypes:
   - vaadin-radio-button (focus delegation)
 
 - [text-field: input elements lack appropriate accessible names](https://github.com/vaadin/web-components/issues/161)
+
+## Questions
+
+### `vaadin-select`
+
+- [ ] VoiceOver does not announce `option` role on the `vaadin-item` elements:
+
+> You are currently on a text element, inside a listbox.
