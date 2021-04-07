@@ -85,8 +85,33 @@ const InputPropsMixinImplementation = (superclass) =>
 
       this.addEventListener('keydown', (e) => this._handleKeyDown(e));
 
+      this._clearElement.addEventListener('mousedown', () => (this._valueClearing = true));
+      this._clearElement.addEventListener('mouseleave', () => (this._valueClearing = false));
+      this._clearElement.addEventListener('click', this._onClearButtonClick.bind(this));
+
       // create observer dynamically to allow subclasses to override hostProps
       this._createMethodObserver(`_hostPropsChanged(${this.constructor.hostProps.join(', ')})`);
+    }
+
+    clear() {
+      this.value = '';
+    }
+
+    /** @private */
+    _onClearButtonClick(e) {
+      e.preventDefault();
+      this._inputNode.focus();
+      this.clear();
+      this._valueClearing = false;
+
+      const inputEvent = new Event('input', { bubbles: true, composed: true });
+      inputEvent.__fromClearButton = true;
+
+      const changeEvent = new Event('change', { bubbles: false });
+      changeEvent.__fromClearButton = true;
+
+      this.inputElement.dispatchEvent(inputEvent);
+      this.inputElement.dispatchEvent(changeEvent);
     }
 
     /**

@@ -112,10 +112,6 @@ const InputFieldMixinImplementation = (superclass) =>
       }
     }
 
-    clear() {
-      this.value = '';
-    }
-
     /**
      * Returns true if the current input value satisfies all constraints (if any)
      * @return {boolean}

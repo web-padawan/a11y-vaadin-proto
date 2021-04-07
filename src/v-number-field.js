@@ -52,7 +52,7 @@ export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement))
           <slot name="input" slot="input"></slot>
           <slot name="suffix" slot="suffix"></slot>
           <slot name="suffix"></slot>
-          <div part="clear-button" id="clearButton" role="button" slot="suffix"></div>
+          <div id="clearButton" part="clear-button" slot="suffix"></div>
           <div
             disabled$="[[!_allowed(1, value, min, max, step)]]"
             part="increase-button"

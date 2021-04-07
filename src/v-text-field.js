@@ -22,7 +22,7 @@ export class VTextField extends TextFieldMixin(ThemableMixin(PolymerElement)) {
           <slot name="prefix" slot="prefix"></slot>
           <slot name="input" slot="input"></slot>
           <slot name="suffix" slot="suffix"></slot>
-          <div part="clear-button" id="clearButton" role="button" slot="suffix"></div>
+          <div id="clearButton" part="clear-button" slot="suffix"></div>
         </vaadin-input-container>
 
         <div part="helper-text" on-click="focus">
