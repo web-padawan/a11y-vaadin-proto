@@ -120,6 +120,8 @@ export class VComboBox extends ComboBoxDataProviderMixin(
       this._inputNode.setAttribute('aria-autocomplete', 'list');
       this._inputNode.setAttribute('aria-expanded', 'false');
 
+      this._inputNode.setAttribute('autocomplete', 'off');
+
       this._setInputElement(this._inputNode);
       this._nativeInput = this._inputNode;
       this._inputNode.addEventListener('input', this._boundInputValueChanged);

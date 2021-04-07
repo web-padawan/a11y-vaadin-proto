@@ -261,6 +261,8 @@ export class VTimePicker extends FieldAriaMixin(InputPropsMixin(ThemableMixin(Po
       this._inputNode.setAttribute('aria-autocomplete', 'list');
       this._inputNode.setAttribute('aria-expanded', 'false');
 
+      this._inputNode.setAttribute('autocomplete', 'off');
+
       this.$.dropdown.setInput(this._inputNode);
     }
   }
