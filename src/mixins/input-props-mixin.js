@@ -36,7 +36,7 @@ const InputPropsMixinImplementation = (superclass) =>
     }
 
     static get hostProps() {
-      return ['name', 'placeholder', 'disabled', 'readonly', 'required'];
+      return ['name', 'placeholder', 'disabled', 'readonly', 'required', 'invalid'];
     }
 
     get slotStyles() {
@@ -112,7 +112,11 @@ const InputPropsMixinImplementation = (superclass) =>
       const attributeNames = this.constructor.hostProps;
 
       attributeNames.forEach((attr, index) => {
-        this._setOrToggleAttribute(attr, attributesValues[index], input);
+        if (attr === 'invalid') {
+          this._setOrToggleAttribute('aria-invalid', this.invalid ? 'true' : false, input);
+        } else {
+          this._setOrToggleAttribute(attr, attributesValues[index], input);
+        }
       });
     }
 
@@ -135,16 +139,6 @@ const InputPropsMixinImplementation = (superclass) =>
       } else {
         node.removeAttribute(name);
       }
-    }
-
-    /**
-     * @param {boolean} invalid
-     * @protected
-     */
-    _invalidChanged(invalid) {
-      super._invalidChanged(invalid);
-
-      this._setOrToggleAttribute('aria-invalid', invalid ? 'true' : false, this._inputNode);
     }
   };
 

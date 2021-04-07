@@ -14,15 +14,19 @@ const FieldAriaMixinImplementation = (superclass) =>
       return 'aria-describedby';
     }
 
+    static get observers() {
+      return ['_invalidChanged(invalid)'];
+    }
+
     /** @protected */
     connectedCallback() {
       super.connectedCallback();
 
-      this._updateAriaAttribute();
+      this._updateAriaAttribute(this.invalid);
     }
 
     /** @protected */
-    _updateAriaAttribute() {
+    _updateAriaAttribute(invalid) {
       const attr = this._ariaAttr;
 
       if (this._ariaTarget && attr) {
@@ -32,7 +36,7 @@ const FieldAriaMixinImplementation = (superclass) =>
 
         // Error message ID needs to be dynamically added / removed based on the validity
         // Otherwise assistive technologies would announce the error, even if we hide it.
-        if (this.invalid) {
+        if (invalid) {
           ariaIds.push(this._errorId);
         }
 
@@ -42,9 +46,7 @@ const FieldAriaMixinImplementation = (superclass) =>
 
     /** @protected */
     _invalidChanged(invalid) {
-      super._invalidChanged(invalid);
-
-      this._updateAriaAttribute();
+      this._updateAriaAttribute(invalid);
     }
   };
 

@@ -12,7 +12,6 @@ const ValidateMixinImplementation = (superclass) =>
         invalid: {
           type: Boolean,
           reflectToAttribute: true,
-          observer: '_invalidChanged',
           notify: true,
           value: false
         },
@@ -42,24 +41,13 @@ const ValidateMixinImplementation = (superclass) =>
         'error-message': () => {
           const error = document.createElement('div');
           error.setAttribute('aria-live', 'assertive');
-          error.textContent = this.errorMessage;
           return error;
         }
       };
     }
 
-    get errorMessage() {
-      return this.__errorMessage !== undefined
-        ? this.__errorMessage
-        : (this._errorNode && this._errorNode.textContent) || '';
-    }
-
-    set errorMessage(error) {
-      this.__errorMessage = error;
-      if (this._errorNode) {
-        this._errorNode.textContent = error;
-      }
-      this._toggleHasErrorMessage(error);
+    static get observers() {
+      return ['_updateErrorMessage(invalid, errorMessage)'];
     }
 
     /** @protected */
@@ -101,19 +89,15 @@ const ValidateMixinImplementation = (superclass) =>
       return !this.required || !!this.value;
     }
 
-    /** @protected */
-    _toggleHasErrorMessage() {
-      this.toggleAttribute('has-error-message', Boolean(this.errorMessage));
-    }
-
     /**
      * @param {boolean} invalid
      * @protected
      */
-    _invalidChanged(invalid) {
+    _updateErrorMessage(invalid, errorMessage) {
       if (this._errorNode) {
-        const hidden = Boolean(!invalid).toString();
-        this._errorNode.setAttribute('aria-hidden', hidden);
+        const hasError = Boolean(invalid && errorMessage);
+        this._errorNode.textContent = hasError ? errorMessage : '';
+        this.toggleAttribute('has-error-message', hasError);
       }
     }
   };
