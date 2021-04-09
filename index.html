@@ -123,6 +123,17 @@
       ></vaadin-time-picker>
     </section>
 
+    <section>
+      <h2>Date picker</h2>
+      <vaadin-date-picker
+        label="Date"
+        error-message="This field is required"
+        helper-text="Choose appointment date"
+        required
+        clear-button-visible
+      ></vaadin-date-picker>
+    </section>
+
     <script type="module">
       import '@vaadin/vaadin-list-box';
       import '@vaadin/vaadin-item';
@@ -137,6 +148,7 @@
       import './src/styles/number-field.js';
       import './src/styles/select.js';
       import './src/styles/combo-box.js';
+      import './src/styles/date-picker.js';
       import './src/styles/time-picker.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
@@ -146,6 +158,7 @@
       import './src/v-number-field.js';
       import './src/v-select.js';
       import './src/v-combo-box.js';
+      import './src/v-date-picker.js';
       import './src/v-time-picker.js';
 
       (async() => {

@@ -110,8 +110,8 @@ const InputPropsMixinImplementation = (superclass) =>
       const changeEvent = new Event('change', { bubbles: false });
       changeEvent.__fromClearButton = true;
 
-      this.inputElement.dispatchEvent(inputEvent);
-      this.inputElement.dispatchEvent(changeEvent);
+      this._inputNode.dispatchEvent(inputEvent);
+      this._inputNode.dispatchEvent(changeEvent);
     }
 
     /**
@@ -122,7 +122,7 @@ const InputPropsMixinImplementation = (superclass) =>
       if (event.key === 'Escape' && this.clearButtonVisible && this._clearOnEsc) {
         const dispatchChange = !!this.value;
         this.clear();
-        dispatchChange && this.inputElement.dispatchEvent(new Event('change'));
+        dispatchChange && this._inputNode.dispatchEvent(new Event('change'));
       }
     }
 
