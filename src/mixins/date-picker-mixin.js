@@ -309,7 +309,7 @@ export const DatePickerMixin = (subclass) =>
         /** @private */
         _noInput: {
           type: Boolean,
-          computed: '_isNoInput(_fullscreen, _ios, i18n, i18n.*)'
+          computed: '_isNoInput(inputElement, _fullscreen, _ios, i18n, i18n.*)'
         },
 
         /** @private */
@@ -464,28 +464,6 @@ export const DatePickerMixin = (subclass) =>
       }
     }
 
-    /**
-     * @return {HTMLElement}
-     * @protected
-     */
-    get _inputElement() {
-      return this._input();
-    }
-
-    /** @private */
-    get _nativeInput() {
-      if (this._inputElement) {
-        // vaadin-text-field's input is focusElement
-        // iron-input's input is inputElement
-        return this._inputElement.focusElement
-          ? this._inputElement.focusElement
-          : this._inputElement.inputElement
-          ? this._inputElement.inputElement
-          : this._inputElement;
-      }
-      return null;
-    }
-
     /** @private */
     _parseDate(str) {
       // Parsing with RegExp to ensure correct format
@@ -502,8 +480,8 @@ export const DatePickerMixin = (subclass) =>
     }
 
     /** @private */
-    _isNoInput(fullscreen, ios, i18n) {
-      return !this._inputElement || fullscreen || ios || !i18n.parseDate;
+    _isNoInput(inputElement, fullscreen, ios, i18n) {
+      return !inputElement || fullscreen || ios || !i18n.parseDate;
     }
 
     /** @private */
@@ -542,6 +520,9 @@ export const DatePickerMixin = (subclass) =>
       }
       if (opened) {
         this._updateAlignmentAndPosition();
+        this._inputNode.setAttribute('aria-expanded', 'true');
+      } else {
+        this._inputNode.setAttribute('aria-expanded', 'false');
       }
     }
 
@@ -637,7 +618,7 @@ export const DatePickerMixin = (subclass) =>
         return;
       }
       if (!this._fullscreen) {
-        const inputRect = this._inputElement.getBoundingClientRect();
+        const inputRect = this._positionTarget.getBoundingClientRect();
 
         const bottomAlign = inputRect.top > window.innerHeight / 2;
         const rightAlign = inputRect.left + this.clientWidth / 2 > window.innerWidth / 2;
@@ -665,7 +646,7 @@ export const DatePickerMixin = (subclass) =>
         }
       }
 
-      this.$.overlay.setAttribute('dir', getComputedStyle(this._inputElement).getPropertyValue('direction'));
+      this.$.overlay.setAttribute('dir', getComputedStyle(this._positionTarget).getPropertyValue('direction'));
       this._overlayContent._repositionYearScroller();
     }
 

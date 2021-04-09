@@ -86,8 +86,14 @@ export class VDatePicker extends DatePickerMixin(
        */
       autoOpenDisabled: Boolean,
 
+      /** @protected */
+      inputElement: {
+        type: Object,
+        readOnly: true
+      },
+
       /** @private */
-      _userInputValue: String
+      _positionTarget: Object
     };
   }
 
@@ -102,19 +108,22 @@ export class VDatePicker extends DatePickerMixin(
   }
 
   set _inputValue(value) {
-    // FIXME: throws on init
     if (this._inputElement) {
       this._inputElement.value = value;
     }
   }
 
-  /** @return {string} */
   get _inputValue() {
-    return this._inputElement.value;
+    return this._inputElement && this._inputElement.value;
   }
 
   /** @private */
   get _inputElement() {
+    return this._inputNode;
+  }
+
+  /** @protected */
+  get _nativeInput() {
     return this._inputNode;
   }
 
@@ -134,8 +143,13 @@ export class VDatePicker extends DatePickerMixin(
 
       this._inputNode.setAttribute('autocomplete', 'off');
 
+      // TODO: simplify references to input node
+      this._setInputElement(this._inputNode);
+
       // TODO: do we need this logic now?
       this._inputElement.addEventListener('change', (e) => {
+        this._userInputValueChanged();
+
         // For change event on text-field blur, after the field is cleared,
         // we schedule change event to be dispatched on date-picker blur.
         if (this._inputElement.value === '' && !e.__fromClearButton) {
@@ -143,6 +157,12 @@ export class VDatePicker extends DatePickerMixin(
         }
       });
     }
+  }
+
+  ready() {
+    super.ready();
+
+    this._positionTarget = this.shadowRoot.querySelector('vaadin-input-container');
   }
 
   /** @private */
