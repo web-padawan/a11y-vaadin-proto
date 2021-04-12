@@ -38,10 +38,12 @@ The following issues should be addressed by the new prototypes:
 
 - [text-field: input elements lack appropriate accessible names](https://github.com/vaadin/web-components/issues/161)
 
-## Questions
+## Limitations
 
 ### `vaadin-select`
 
 - [ ] VoiceOver does not announce `option` role on the `vaadin-item` elements:
 
 > You are currently on a text element, inside a listbox.
+
+This appears to be a VoiceOver specific behavior, not something we can fix.
