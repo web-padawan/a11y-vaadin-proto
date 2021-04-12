@@ -15,7 +15,7 @@ export class VTimePicker extends FieldAriaMixin(InputPropsMixin(ThemableMixin(Po
     return html`
       <style include="vaadin-text-field-shared-styles"></style>
 
-      <div class="vaadin-select-container" part="container">
+      <div part="container">
         <div part="label" on-click="focus">
           <slot name="label"></slot>
         </div>
@@ -31,7 +31,7 @@ export class VTimePicker extends FieldAriaMixin(InputPropsMixin(ThemableMixin(Po
           dir="ltr"
           theme$="[[theme]]"
         >
-          <vaadin-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]" class="input">
+          <vaadin-input-container part="input-field" readonly="[[readonly]]" disabled="[[disabled]]">
             <slot name="prefix" slot="prefix"></slot>
             <slot name="input" slot="input"></slot>
             <div id="clearButton" part="clear-button" slot="suffix"></div>

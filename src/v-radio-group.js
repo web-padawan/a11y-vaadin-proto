@@ -38,7 +38,7 @@ export class VRadioGroup extends FieldAriaMixin(LabelMixin(FocusMixin(DisabledMi
           display: none;
         }
       </style>
-      <div class="container">
+      <div part="container">
         <div part="label">
           <slot name="label"></slot>
         </div>

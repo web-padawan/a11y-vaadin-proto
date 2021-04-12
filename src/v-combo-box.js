@@ -21,7 +21,7 @@ export class VComboBox extends ComboBoxDataProviderMixin(
     return html`
       <style include="vaadin-text-field-shared-styles"></style>
 
-      <div class="vaadin-combo-box-container" part="container">
+      <div part="container">
         <div part="label" on-click="focus">
           <slot name="label"></slot>
         </div>

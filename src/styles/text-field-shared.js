@@ -36,9 +36,7 @@ registerStyles(
       display: flex;
       align-items: center;
       flex: auto;
-    }
-
-    .vaadin-text-field-container [part='input-field'] {
+      /* TODO: text-field only */
       flex-grow: 0;
     }
 

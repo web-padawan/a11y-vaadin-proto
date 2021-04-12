@@ -19,7 +19,7 @@ export class VSelect extends DelegateFocusMixin(FieldAriaMixin(LabelMixin(SlotMi
     return html`
       <style include="vaadin-text-field-shared-styles"></style>
 
-      <div class="vaadin-select-container" part="container">
+      <div part="container">
         <div part="label" on-click="focus">
           <slot name="label"></slot>
         </div>

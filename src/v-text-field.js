@@ -13,7 +13,7 @@ export class VTextField extends TextFieldMixin(ThemableMixin(PolymerElement)) {
     return html`
       <style include="vaadin-text-field-shared-styles"></style>
 
-      <div class="vaadin-text-field-container" part="container">
+      <div part="container">
         <div part="label" on-click="focus">
           <slot name="label"></slot>
         </div>

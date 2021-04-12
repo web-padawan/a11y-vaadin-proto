@@ -34,7 +34,7 @@ export class VNumberField extends InputFieldMixin(ThemableMixin(PolymerElement))
         /* TODO: RTL styles are missing */
       </style>
 
-      <div class="vaadin-text-field-container" part="container">
+      <div part="container">
         <div part="label" on-click="focus">
           <slot name="label"></slot>
         </div>
