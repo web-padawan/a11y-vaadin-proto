@@ -134,6 +134,16 @@
       ></vaadin-date-picker>
     </section>
 
+    <section>
+      <h2>Date time picker</h2>
+      <vaadin-date-time-picker
+        label="Appointment"
+        error-message="This field is required"
+        helper-text="Choose date and time"
+        required
+      ></vaadin-date-time-picker>
+    </section>
+
     <script type="module">
       import '@vaadin/vaadin-list-box';
       import '@vaadin/vaadin-item';
@@ -150,6 +160,7 @@
       import './src/styles/combo-box.js';
       import './src/styles/date-picker.js';
       import './src/styles/time-picker.js';
+      import './src/styles/date-time-picker.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';
@@ -160,12 +171,18 @@
       import './src/v-combo-box.js';
       import './src/v-date-picker.js';
       import './src/v-time-picker.js';
+      import './src/v-date-time-picker.js';
 
-      (async() => {
+      (async () => {
         const res = await fetch('https://demo.vaadin.com/demo-data/1.0/filtered-countries');
         const json = await res.json();
         document.querySelector('vaadin-combo-box').items = json.result;
       })();
+
+      // Mark as invalid to test announcement
+      setTimeout(() => {
+        document.querySelector('vaadin-date-time-picker').invalid = true;
+      });
     </script>
   </body>
 </html>
