@@ -64,7 +64,6 @@ export class VPasswordField extends VTextField {
       ...super.slots,
       reveal: () => {
         const btn = document.createElement('button');
-        btn.setAttribute('aria-label', 'Reveal');
         btn.setAttribute('tabindex', '0');
         return btn;
       }
@@ -97,6 +96,7 @@ export class VPasswordField extends VTextField {
     }
 
     this._toggleRevealHidden(this.revealButtonHidden);
+    this._updateToggleState(false);
   }
 
   /** @protected */
@@ -124,11 +124,7 @@ export class VPasswordField extends VTextField {
 
   /** @private */
   _togglePasswordVisibility() {
-    this._passwordVisibilityChanging = true;
-    this._inputNode.blur();
     this._setPasswordVisible(!this.passwordVisible);
-    this._inputNode.focus();
-    this._passwordVisibilityChanging = false;
   }
 
   /** @private */
@@ -147,8 +143,23 @@ export class VPasswordField extends VTextField {
   }
 
   /** @private */
+  _updateToggleState(passwordVisible) {
+    if (passwordVisible) {
+      this._revealNode.setAttribute('aria-pressed', 'true');
+      this._revealNode.setAttribute('aria-label', 'Hide password');
+    } else {
+      this._revealNode.setAttribute('aria-pressed', 'false');
+      this._revealNode.setAttribute('aria-label', 'Show password');
+    }
+  }
+
+  /** @private */
   _passwordVisibleChanged(passwordVisible) {
     this._setType(passwordVisible ? 'text' : 'password');
+
+    if (this._revealNode) {
+      this._updateToggleState(passwordVisible);
+    }
   }
 }
 
