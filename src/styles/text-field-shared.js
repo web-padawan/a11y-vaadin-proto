@@ -20,6 +20,10 @@ registerStyles(
       display: none !important;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     [part='container'] {
       display: flex;
       flex-direction: column;
