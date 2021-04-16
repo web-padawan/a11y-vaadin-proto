@@ -117,6 +117,15 @@ export class VPasswordField extends VTextField {
     return e.relatedTarget !== this._revealNode;
   }
 
+  /** @protected */
+  _setFocused(focused) {
+    super._setFocused(focused);
+
+    if (!focused) {
+      this._setPasswordVisible(false);
+    }
+  }
+
   /** @private */
   _revealButtonHiddenChanged(hidden) {
     this._toggleRevealHidden(hidden);
