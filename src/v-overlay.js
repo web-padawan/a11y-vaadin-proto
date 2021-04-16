@@ -72,7 +72,7 @@ export class VOverlay extends ThemableMixin(DirMixin(PolymerElement)) {
         }
       </style>
       <div id="backdrop" part="backdrop" hidden$="[[!withBackdrop]]"></div>
-      <div part="overlay" id="overlay" tabindex="-1">
+      <div part="overlay" id="overlay">
         <div part="content" id="content">
           <slot></slot>
         </div>
@@ -631,8 +631,6 @@ export class VOverlay extends ThemableMixin(DirMixin(PolymerElement)) {
 
   /** @protected */
   _enterModalState() {
-    blockingElements.push(this);
-
     if (document.body.style.pointerEvents !== 'none') {
       // Set body pointer-events to 'none' to disable mouse interactions with
       // other document nodes.
@@ -643,9 +641,12 @@ export class VOverlay extends ThemableMixin(DirMixin(PolymerElement)) {
     // Disable pointer events in other attached overlays
     VOverlay.__attachedInstances.forEach((el) => {
       if (el !== this) {
+        blockingElements.remove(el);
         el.shadowRoot.querySelector('[part="overlay"]').style.pointerEvents = 'none';
       }
     });
+
+    blockingElements.push(this);
   }
 
   /** @protected */
@@ -678,6 +679,7 @@ export class VOverlay extends ThemableMixin(DirMixin(PolymerElement)) {
       el.shadowRoot.querySelector('[part="overlay"]').style.removeProperty('pointer-events');
       if (!el.modeless) {
         // Stop after the last modal
+        blockingElements.push(el);
         break;
       }
     }
@@ -860,7 +862,7 @@ export class VOverlay extends ThemableMixin(DirMixin(PolymerElement)) {
       index = focusableElements.length - 1;
     }
 
-    focusableElements[index].focus();
+    focusableElements[index] && focusableElements[index].focus();
   }
 
   /**

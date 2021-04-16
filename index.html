@@ -198,21 +198,31 @@
 
       overlay1.renderer = (root) => {
         if (!root.firstChild) {
+          const content = document.createElement('div');
+          root.appendChild(content);
+
           const div = document.createElement('div');
           div.textContent = 'Content 1';
           div.setAttribute('id', 'overlay-1-header');
-          root.appendChild(div);
+          content.appendChild(div);
+
+          const p = document.createElement('p');
+          p.textContent = 'This is a first dialog';
+          p.setAttribute('id', 'overlay-1-text');
+          content.appendChild(p);
 
           const btn = document.createElement('button');
           btn.textContent = 'Open 2';
           btn.addEventListener('click', () => {
             overlay2.opened = true;
           });
-          root.appendChild(btn);
+          content.appendChild(btn);
 
           // TODO: should be handled by dialog
           root.setAttribute('role', 'dialog');
+          root.setAttribute('aria-modal', 'true');
           root.setAttribute('aria-labelledby', 'overlay-1-header');
+          root.setAttribute('aria-describedby', 'overlay-1-text');
         }
       };
 
@@ -223,12 +233,19 @@
           div.setAttribute('id', 'overlay-2-header');
           root.appendChild(div);
 
+          const p = document.createElement('p');
+          p.textContent = 'This is a second dialog';
+          p.setAttribute('id', 'overlay-2-text');
+          root.appendChild(p);
+
           const input = document.createElement('input');
           root.appendChild(input);
 
           // TODO: should be handled by dialog
           root.setAttribute('role', 'dialog');
+          root.setAttribute('aria-modal', 'true');
           root.setAttribute('aria-labelledby', 'overlay-2-header');
+          root.setAttribute('aria-describedby', 'overlay-2-text');
         }
       };
 
