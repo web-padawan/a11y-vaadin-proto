@@ -64,6 +64,7 @@ export class VPasswordField extends VTextField {
       ...super.slots,
       reveal: () => {
         const btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
         btn.setAttribute('tabindex', '0');
         return btn;
       }
@@ -92,6 +93,7 @@ export class VPasswordField extends VTextField {
     super.connectedCallback();
 
     if (this._revealNode) {
+      this._revealNode.setAttribute('aria-label', 'Show password');
       this._revealNode.addEventListener('click', this._boundTogglePasswordVisibility);
     }
 
@@ -153,12 +155,8 @@ export class VPasswordField extends VTextField {
 
   /** @private */
   _updateToggleState(passwordVisible) {
-    if (passwordVisible) {
-      this._revealNode.setAttribute('aria-pressed', 'true');
-      this._revealNode.setAttribute('aria-label', 'Hide password');
-    } else {
-      this._revealNode.setAttribute('aria-pressed', 'false');
-      this._revealNode.setAttribute('aria-label', 'Show password');
+    if (this._revealNode) {
+      this._revealNode.setAttribute('aria-pressed', passwordVisible ? 'true' : 'false');
     }
   }
 
@@ -166,9 +164,7 @@ export class VPasswordField extends VTextField {
   _passwordVisibleChanged(passwordVisible) {
     this._setType(passwordVisible ? 'text' : 'password');
 
-    if (this._revealNode) {
-      this._updateToggleState(passwordVisible);
-    }
+    this._updateToggleState(passwordVisible);
   }
 }
 
