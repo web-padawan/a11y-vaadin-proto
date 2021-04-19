@@ -162,11 +162,17 @@
       <v-overlay id="overlay-2" with-backdrop focus-trap restore-focus-on-close></v-overlay>
     </section>
 
+    <section>
+      <h2>Upload</h2>
+      <vaadin-upload accept="application/pdf"></vaadin-upload>
+    </section>
+
     <script type="module">
       import '@vaadin/vaadin-list-box';
       import '@vaadin/vaadin-item';
       import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-dropdown-styles.js';
       import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-item-styles.js';
+      import '@vaadin/vaadin-upload/theme/lumo/vaadin-upload-styles.js';
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
@@ -194,6 +200,7 @@
       import './src/v-time-picker.js';
       import './src/v-date-time-picker.js';
       import './src/v-overlay.js';
+      import './src/v-upload.js';
 
       (async () => {
         const res = await fetch('https://demo.vaadin.com/demo-data/1.0/filtered-countries');
@@ -266,6 +273,13 @@
       button.addEventListener('click', () => {
         overlay1.opened = true;
       });
+
+      const upload = document.querySelector('vaadin-upload');
+      upload.files = [
+        { name: 'Don Quixote.pdf', progress: 100, complete: true },
+        { name: 'Hamlet.pdf', progress: 100, complete: true }
+      ];
+      upload.set('i18n.addFiles.many', 'Select Books...');
     </script>
   </body>
 </html>
