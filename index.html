@@ -26,6 +26,13 @@
   </head>
   <body>
     <section>
+      <h2>Button</h2>
+      <v-button theme="primary success" disabled>Confirm</v-button>
+      <v-button>Cancel</v-button>
+      <v-button theme="error">Reject</v-button>
+    </section>
+
+    <section>
       <h2>Checkbox</h2>
       <vaadin-checkbox>I accept <a href="#">Terms and conditions</a></vaadin-checkbox>
       <vaadin-checkbox checked indeterminate label="Select all"></vaadin-checkbox>
@@ -173,6 +180,7 @@
       import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-dropdown-styles.js';
       import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-item-styles.js';
       import '@vaadin/vaadin-upload/theme/lumo/vaadin-upload-styles.js';
+      import './src/styles/button.js';
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
       import './src/styles/radio-button.js';
@@ -187,6 +195,7 @@
       import './src/styles/time-picker.js';
       import './src/styles/date-time-picker.js';
       import './src/styles/overlay.js';
+      import './src/v-button.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
       import './src/v-radio-button.js';

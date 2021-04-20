@@ -3,8 +3,8 @@ import { resetMouseCanceller } from '@polymer/polymer/lib/utils/gestures.js';
 import '@polymer/polymer/lib/elements/dom-repeat.js';
 import { ElementMixin } from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
-import '@vaadin/vaadin-button/src/vaadin-button.js';
 import './v-upload-file.js';
+import './v-button.js';
 
 class UploadElement extends ElementMixin(ThemableMixin(PolymerElement)) {
   static get template() {
@@ -29,9 +29,9 @@ class UploadElement extends ElementMixin(ThemableMixin(PolymerElement)) {
       <div part="primary-buttons">
         <div id="addFiles" on-touchend="_onAddFilesTouchEnd" on-click="_onAddFilesClick">
           <slot name="add-button">
-            <button type="button" part="upload-button" id="addButton" disabled="[[maxFilesReached]]">
+            <v-button part="upload-button" id="addButton" disabled="[[maxFilesReached]]">
               [[_i18nPlural(maxFiles, i18n.addFiles, i18n.addFiles.*)]]
-            </button>
+            </v-button>
           </slot>
         </div>
         <div part="drop-label" hidden$="[[nodrop]]" id="dropLabelContainer">
