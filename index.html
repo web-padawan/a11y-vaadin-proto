@@ -22,14 +22,20 @@
         margin: 0 0 1rem;
         font-size: 1.25rem;
       }
+
+      .buttons > * {
+        margin-right: 8px;
+      }
     </style>
   </head>
   <body>
     <section>
       <h2>Button</h2>
-      <v-button theme="primary success" disabled>Confirm</v-button>
-      <v-button>Cancel</v-button>
-      <v-button theme="error">Reject</v-button>
+      <div class="buttons">
+        <v-button theme="primary success" disabled>Confirm</v-button>
+        <v-button>Cancel</v-button>
+        <v-button theme="error">Reject</v-button>
+      </div>
     </section>
 
     <section>
