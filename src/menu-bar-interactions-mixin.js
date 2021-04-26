@@ -305,8 +305,8 @@ export const InteractionsMixin = (superClass) =>
           })
         );
 
+        button.setAttribute('expanded', '');
         const native = button.$.button;
-        native.setAttribute('expanded', '');
         native.setAttribute('aria-expanded', 'true');
       });
 
