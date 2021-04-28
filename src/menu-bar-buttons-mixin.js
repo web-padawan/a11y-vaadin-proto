@@ -29,11 +29,6 @@ export const ButtonsMixin = (superClass) =>
       this.setAttribute('role', 'menubar');
 
       this.addEventListener('iron-resize', () => this.__onResize());
-
-      const overflow = this._overflow.$.button;
-      overflow.setAttribute('role', 'menuitem');
-      overflow.setAttribute('aria-haspopup', 'true');
-      overflow.setAttribute('aria-expanded', 'false');
     }
 
     /**
@@ -41,7 +36,7 @@ export const ButtonsMixin = (superClass) =>
      * @protected
      */
     get _buttons() {
-      return Array.from(this.shadowRoot.querySelectorAll('[part$="button"]'));
+      return Array.from(this.querySelectorAll('vaadin-menu-bar-button'));
     }
 
     /**
@@ -57,7 +52,7 @@ export const ButtonsMixin = (superClass) =>
      * @protected
      */
     get _overflow() {
-      return this.shadowRoot.querySelector('[part="overflow-button"]');
+      return this._getDirectSlotChild('overflow');
     }
 
     /** @private */
@@ -73,12 +68,18 @@ export const ButtonsMixin = (superClass) =>
       const container = this._container;
       const buttons = this._buttons.slice(0);
       const overflow = buttons.pop();
+
+      // Not connected yet, do nothing.
+      if (!overflow) {
+        return;
+      }
+
       const isRTL = this.getAttribute('dir') === 'rtl';
 
       // reset all buttons in the menu bar and the overflow button
       for (let i = 0; i < buttons.length; i++) {
         const btn = buttons[i];
-        btn.disabled = btn.item.disabled;
+        btn.disabled = btn.item && btn.item.disabled;
         btn.style.visibility = '';
         btn.style.position = '';
 
@@ -139,11 +140,8 @@ export const ButtonsMixin = (superClass) =>
 
     /** @private */
     __renderButtons(items = []) {
-      const container = this._container;
-      const overflow = this._overflow;
-
-      while (container.children.length > 1) {
-        container.removeChild(container.firstElementChild);
+      while (this.children.length > 1) {
+        this.removeChild(this.firstElementChild);
       }
 
       items.forEach((item) => {
@@ -175,7 +173,7 @@ export const ButtonsMixin = (superClass) =>
           button.textContent = item.text;
         }
         // Append and get access to native button
-        container.insertBefore(button, overflow);
+        this.appendChild(button);
         const native = button.$.button;
 
         if (item.disabled) {
@@ -188,7 +186,7 @@ export const ButtonsMixin = (superClass) =>
           native.setAttribute('aria-haspopup', 'true');
           native.setAttribute('aria-expanded', 'false');
         }
-        button.setAttribute('part', 'menu-bar-button');
+
         if (this.theme && this.theme !== '') {
           button.setAttribute('theme', this.theme);
         }

@@ -1,11 +1,12 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import { ButtonsMixin } from './menu-bar-buttons-mixin.js';
+import { SlotMixin } from './mixins/slot-mixin.js';
 import { InteractionsMixin } from './menu-bar-interactions-mixin.js';
 import '@vaadin/vaadin-menu-bar/src/vaadin-menu-bar-submenu.js';
 import './v-menu-bar-button.js';
 
-class VMenuBar extends ButtonsMixin(InteractionsMixin(ThemableMixin(PolymerElement))) {
+class VMenuBar extends ButtonsMixin(InteractionsMixin(SlotMixin(ThemableMixin(PolymerElement)))) {
   static get template() {
     return html`
       <style>
@@ -26,25 +27,27 @@ class VMenuBar extends ButtonsMixin(InteractionsMixin(ThemableMixin(PolymerEleme
           padding: 2px;
         }
 
-        [part$='button'] {
+        ::slotted([vaadin-menu-bar-button]) {
           flex-shrink: 0;
         }
 
-        [part='overflow-button'] {
+        ::slotted([slot='overflow']) {
           margin-right: 0;
         }
 
-        .dots::before {
+        ::slotted([slot='overflow'])::before {
           display: block;
           content: '\\00B7\\00B7\\00B7';
           font-size: inherit;
           line-height: inherit;
         }
       </style>
+
       <div part="container">
-        <vaadin-menu-bar-button part="overflow-button" hidden$="[[!_hasOverflow]]">
-          <div class="dots"></div>
-        </vaadin-menu-bar-button>
+        <slot></slot>
+        <span hidden$="[[!_hasOverflow]]">
+          <slot name="overflow"></slot>
+        </span>
       </div>
       <vaadin-menu-bar-submenu is-root=""></vaadin-menu-bar-submenu>
     `;
@@ -61,6 +64,27 @@ class VMenuBar extends ButtonsMixin(InteractionsMixin(ThemableMixin(PolymerEleme
         value: () => []
       }
     };
+  }
+
+  get slots() {
+    return {
+      ...super.slots,
+      overflow: () => {
+        const overflow = document.createElement('vaadin-menu-bar-button');
+        return overflow;
+      }
+    };
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    if (this._overflow) {
+      const native = this._overflow.$.button;
+      native.setAttribute('role', 'menuitem');
+      native.setAttribute('aria-haspopup', 'true');
+      native.setAttribute('aria-expanded', 'false');
+    }
   }
 }
 

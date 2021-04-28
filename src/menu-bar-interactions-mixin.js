@@ -121,7 +121,7 @@ export const InteractionsMixin = (superClass) =>
       // IE names for arrows do not include the Arrow prefix
       const key = event.key.replace(/^Arrow/, '');
       const buttons = this._buttons;
-      const currentBtn = this.shadowRoot.activeElement || this._expandedButton;
+      const currentBtn = this.getRootNode().activeElement || this._expandedButton;
       const currentIdx = buttons.indexOf(currentBtn);
       let idx;
       let increment;
