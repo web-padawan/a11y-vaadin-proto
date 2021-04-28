@@ -185,6 +185,19 @@
       <vaadin-menu-bar></vaadin-menu-bar>
     </section>
 
+    <section>
+      <h2>Custom field</h2>
+      <vaadin-custom-field
+        label="Payment"
+        error-message="This field is required"
+        helper-text="Enter your card info"
+        required
+      >
+        <input type="text" placeholder="16 digits" aria-label="Card number" maxlength="16" />
+        <input type="text" placeholder="3 digits" aria-label="CVV" style="width: 5em" maxlength="3" />
+      </vaadin-custom-field>
+    </section>
+
     <script type="module">
       import '@vaadin/vaadin-list-box';
       import '@vaadin/vaadin-item';
@@ -197,6 +210,7 @@
       import './src/styles/button.js';
       import './src/styles/checkbox.js';
       import './src/styles/checkbox-group.js';
+      import './src/styles/custom-field.js';
       import './src/styles/radio-button.js';
       import './src/styles/radio-group.js';
       import './src/styles/input-container.js';
@@ -213,6 +227,7 @@
       import './src/v-button.js';
       import './src/v-checkbox.js';
       import './src/v-checkbox-group.js';
+      import './src/v-custom-field.js';
       import './src/v-radio-button.js';
       import './src/v-radio-group.js';
       import './src/v-text-field.js';
