@@ -353,22 +353,24 @@
 
       const origSetFocusable = ListBox.prototype._setFocusable;
 
+      let itemId = 0;
+
       ListBox.prototype._setFocusable = function(idx) {
         origSetFocusable.call(this, idx);
 
         this.items.forEach((item, i) => {
-          item.id = `vaadin-context-menu-item-content-${i}`;
-
           if (!item.firstElementChild) {
             const text = item.textContent;
             item.textContent = '';
 
             const span = document.createElement('span');
             span.textContent = text;
-            span.id = `vaadin-context-menu-item-${i}`;
+            span.id = `vaadin-context-menu-item-content-${itemId}`;
 
             item.appendChild(span);
             item.setAttribute('aria-labelledby', span.id);
+
+            itemId += 1;
           }
         });
       }
