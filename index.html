@@ -181,6 +181,13 @@
     </section>
 
     <section>
+      <h2>Context menu</h2>
+      <vaadin-context-menu open-on="click">
+        <button>Open menu</button>
+      </vaadin-context-menu>
+    </section>
+
+    <section>
       <h2>Menu bar</h2>
       <vaadin-menu-bar></vaadin-menu-bar>
     </section>
@@ -204,7 +211,7 @@
       import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-dropdown-styles.js';
       import '@vaadin/vaadin-combo-box/theme/lumo/vaadin-combo-box-item-styles.js';
       import '@vaadin/vaadin-upload/theme/lumo/vaadin-upload-styles.js';
-      import '@vaadin/vaadin-context-menu/theme/lumo/vaadin-context-menu.js';
+      import '@vaadin/vaadin-context-menu/theme/lumo/vaadin-context-menu-styles.js';
       import '@vaadin/vaadin-menu-bar/theme/lumo/vaadin-menu-bar-item-styles.js';
       import '@vaadin/vaadin-menu-bar/theme/lumo/vaadin-menu-bar-overlay-styles.js';
       import './src/styles/button.js';
@@ -321,8 +328,8 @@
       ];
       upload.set('i18n.addFiles.many', 'Select Books...');
 
-      const menu = document.querySelector('vaadin-menu-bar');
-      menu.items = [
+      const menubar = document.querySelector('vaadin-menu-bar');
+      menubar.items = [
         { text: 'Home' },
         {
           text: 'Reports',
@@ -331,6 +338,40 @@
         { text: 'Dashboard', disabled: true },
         { text: 'Help' }
       ];
+
+      const menu = document.querySelector('vaadin-context-menu');
+      menu.items = [
+        { text: 'Edit' },
+        {
+          text: 'Copy',
+          children: [{ text: 'Copy text' }, { text: 'Copy HTML' }]
+        },
+        { text: 'Delete' }
+      ];
+
+      const ListBox = customElements.get('vaadin-context-menu-list-box');
+
+      const origSetFocusable = ListBox.prototype._setFocusable;
+
+      ListBox.prototype._setFocusable = function(idx) {
+        origSetFocusable.call(this, idx);
+
+        this.items.forEach((item, i) => {
+          item.id = `vaadin-context-menu-item-content-${i}`;
+
+          if (!item.firstElementChild) {
+            const text = item.textContent;
+            item.textContent = '';
+
+            const span = document.createElement('span');
+            span.textContent = text;
+            span.id = `vaadin-context-menu-item-${i}`;
+
+            item.appendChild(span);
+            item.setAttribute('aria-labelledby', span.id);
+          }
+        });
+      }
     </script>
   </body>
 </html>
