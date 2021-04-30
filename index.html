@@ -349,13 +349,22 @@
         { text: 'Delete' }
       ];
 
-      const ListBox = customElements.get('vaadin-context-menu-list-box');
+      // Restore focus on context-menu close
+      // TODO: does not work with "close-all-menus"
+      // https://github.com/vaadin/web-components/issues/292
+      const ContextMenu = customElements.get('vaadin-context-menu');
+      const origInitMenu = ContextMenu.prototype.__initMenu;
+      ContextMenu.prototype.__initMenu = function (root, menu) {
+        origInitMenu.call(this, root, menu);
+        this.$.overlay.restoreFocusOnClose = true;
+      };
 
-      const origSetFocusable = ListBox.prototype._setFocusable;
-
+      // Fix context-menu-item in VoiceOver
       let itemId = 0;
 
-      ListBox.prototype._setFocusable = function(idx) {
+      const ListBox = customElements.get('vaadin-context-menu-list-box');
+      const origSetFocusable = ListBox.prototype._setFocusable;
+      ListBox.prototype._setFocusable = function (idx) {
         origSetFocusable.call(this, idx);
 
         this.items.forEach((item, i) => {
@@ -373,7 +382,7 @@
             itemId += 1;
           }
         });
-      }
+      };
     </script>
   </body>
 </html>
