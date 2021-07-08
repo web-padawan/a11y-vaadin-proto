@@ -7,8 +7,6 @@ import { ComboBoxDataProviderMixin } from '@vaadin/vaadin-combo-box/src/vaadin-c
 import '@vaadin/vaadin-combo-box/src/vaadin-combo-box-dropdown-wrapper.js';
 import './styles/text-field-shared.js';
 import './v-input-container.js';
-import './v-time-picker-dropdown';
-import './v-input-container.js';
 
 export class VComboBox extends ComboBoxDataProviderMixin(
   ComboBoxMixin(FieldAriaMixin(InputPropsMixin(ThemableMixin(PolymerElement))))
